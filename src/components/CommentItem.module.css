@@ -1,0 +1,109 @@
+.comment {
+  padding: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.nickname {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.time {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.content {
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.actionBtn {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  transition: color 0.1s;
+}
+.actionBtn:hover {
+  color: var(--color-text-secondary);
+}
+.actionBtnDanger {
+  composes: actionBtn;
+}
+.actionBtnDanger:hover {
+  color: var(--color-danger);
+}
+
+/* Reply input */
+.replyWrapper {
+  margin-left: 20px;
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.replyIcon {
+  color: var(--color-text-muted);
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.replyBody {
+  flex: 1;
+}
+
+.replyFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+/* Replies list */
+.replies {
+  margin-left: 20px;
+  margin-top: 10px;
+  padding-left: 14px;
+  border-left: 2px solid var(--color-border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.replyHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 2px;
+}
+
+.replyContent {
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  margin-left: 18px;
+}
+
+.replyActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+  margin-left: 18px;
+}

@@ -1,0 +1,39 @@
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 120px 16px;
+  text-align: center;
+}
+
+.icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.message {
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+}
+
+.contact {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-top: 24px;
+}
+
+.email {
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.email:hover {
+  text-decoration: underline;
+}

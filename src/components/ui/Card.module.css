@@ -1,0 +1,18 @@
+.card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.padded {
+  padding: 20px;
+}
+
+.centered {
+  text-align: center;
+}
+
+.divider {
+  border-top: 1px solid var(--color-border-light);
+}

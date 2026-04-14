@@ -1,0 +1,111 @@
+.layout {
+  max-width: var(--max-width-wide);
+  margin: 0 auto;
+  padding: 20px 0 48px;
+  display: flex;
+  align-items: flex-start;
+  gap: 36px;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tab {
+  flex: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s;
+}
+
+.tab:hover {
+  color: var(--color-text);
+}
+
+.tabActive {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* Notice */
+.noticeList {
+  border-bottom: 2px solid var(--color-border);
+}
+
+.noticeItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding-left: 12px;
+  background: var(--color-bg-secondary);
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.noticeItem::before {
+  content: '공지';
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  margin-top: 14px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--color-accent);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.noticeItem :global([class*="meta"]) {
+  display: none;
+}
+
+.noticeItem:last-child {
+  border-bottom: none;
+}
+
+/* List */
+.listItem {
+  border-bottom: 1px solid var(--color-border-light);
+}
+.listItem:last-child {
+  border-bottom: none;
+}
+
+.writeBtn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+
+.empty {
+  padding: 60px 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}

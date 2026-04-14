@@ -1,0 +1,49 @@
+.sidebar {
+  width: 230px;
+  flex-shrink: 0;
+  display: none;
+  margin-top: 44px;
+}
+
+.crisisBox {
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+}
+
+.crisisTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  margin-bottom: 10px;
+}
+
+.crisisList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.crisisItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.crisisName {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.crisisNumber {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    display: block;
+  }
+}

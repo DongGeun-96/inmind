@@ -1,0 +1,159 @@
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  margin-bottom: 16px;
+  transition: color 0.15s;
+}
+.backBtn:hover {
+  color: var(--color-primary);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.categoryName {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+}
+
+.selectGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.selectLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.select {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: #fff;
+  color: var(--color-text);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.boardName {
+  font-size: 14px;
+  color: var(--color-text);
+  padding: 10px 0;
+}
+
+.form {
+  background: #fff;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.options {
+  padding-top: 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.actions > * {
+  flex: 1;
+}
+
+/* Editor */
+.editorGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.editor :global(.ql-toolbar) {
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  border-color: var(--color-border);
+}
+
+.editor :global(.ql-container) {
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  border-color: var(--color-border);
+  font-size: 14px;
+  min-height: 300px;
+}
+
+.editor :global(.ql-editor) {
+  min-height: 300px;
+  line-height: 1.8;
+}
+
+.editor :global(.ql-editor.ql-blank::before) {
+  color: var(--color-text-muted);
+  font-style: normal;
+  font-size: 14px;
+}
+
+.emojiWrapper {
+  position: relative;
+  margin-top: 8px;
+}
+
+.emojiBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.emojiBtn:hover {
+  background: var(--color-bg-hover);
+}
+
+.emojiPicker {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  z-index: 10;
+}
+
+.editor :global(.ql-editor img) {
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+  margin: 8px 0;
+}

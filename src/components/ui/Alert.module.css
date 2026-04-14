@@ -1,0 +1,16 @@
+.alert {
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+}
+
+.error {
+  background: #fff0f0;
+  color: var(--color-danger);
+}
+
+.info {
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  text-align: center;
+}

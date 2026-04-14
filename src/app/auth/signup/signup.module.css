@@ -1,0 +1,154 @@
+.page {
+  min-height: 80vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px 60px;
+}
+
+.container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.pageTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 약관 동의 */
+.agreements {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.agreeAll {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.agreeAll input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.agreeDivider {
+  height: 1px;
+  background: var(--color-border-light);
+}
+
+.agreeItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+}
+
+.agreeItem input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.required {
+  color: var(--color-accent);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.viewLink {
+  margin-left: auto;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.viewLink:hover {
+  color: var(--color-text-secondary);
+}
+
+/* Field hint */
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fieldHint {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  padding-left: 2px;
+}
+
+/* Username check */
+.usernameChecking {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  padding-left: 2px;
+}
+
+.usernameAvailable {
+  font-size: 12px;
+  color: var(--color-success);
+  padding-left: 2px;
+}
+
+.usernameTaken {
+  font-size: 12px;
+  color: var(--color-danger);
+  padding-left: 2px;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.link {
+  color: var(--color-text);
+  font-weight: 500;
+}
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Success */
+.successBox {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.successText {
+  color: var(--color-text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.6;
+  font-size: 14px;
+}
