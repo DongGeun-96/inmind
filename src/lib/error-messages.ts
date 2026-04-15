@@ -1,7 +1,9 @@
 const ERROR_MAP: Record<string, string> = {
-  // Auth
+  // Auth (message)
   'Invalid login credentials': '아이디 또는 비밀번호가 올바르지 않아요.',
   'Email not confirmed': '이메일 인증이 완료되지 않았어요. 메일함을 확인해주세요.',
+  // Auth (code)
+  'email_not_confirmed': '이메일 인증이 완료되지 않았어요. 메일함을 확인해주세요.',
   'User already registered': '이미 가입된 이메일이에요.',
   'Signup requires a valid password': '올바른 비밀번호를 입력해주세요.',
   'Password should be at least 6 characters': '비밀번호는 8자 이상이어야 해요.',

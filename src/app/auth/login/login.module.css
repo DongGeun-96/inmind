@@ -43,3 +43,7 @@
 .divider {
   color: var(--color-border);
 }
+
+.resendArea {
+  margin-top: 8px;
+}

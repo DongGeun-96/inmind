@@ -19,10 +19,16 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resolvedEmail, setResolvedEmail] = useState('');
+  const [isEmailNotConfirmed, setIsEmailNotConfirmed] = useState(false);
+  const [resendLoading, setResendLoading] = useState(false);
+  const [resendSuccess, setResendSuccess] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsEmailNotConfirmed(false);
+    setResendSuccess(false);
     setLoading(true);
 
     // 아이디로 이메일 조회
@@ -38,12 +44,17 @@ export default function LoginPage() {
       return;
     }
 
+    setResolvedEmail(user.email);
+
     const { error } = await supabase.auth.signInWithPassword({
       email: user.email,
       password,
     });
 
     if (error) {
+      if (error.message.includes('Email not confirmed') || error.code === 'email_not_confirmed') {
+        setIsEmailNotConfirmed(true);
+      }
       setError(toKoreanError(error.message));
       setLoading(false);
       return;
@@ -53,13 +64,53 @@ export default function LoginPage() {
     router.refresh();
   };
 
+  const handleResend = async () => {
+    setResendLoading(true);
+    setResendSuccess(false);
+
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: resolvedEmail,
+    });
+
+    if (error) {
+      setError(toKoreanError(error.message));
+    } else {
+      setResendSuccess(true);
+    }
+
+    setResendLoading(false);
+  };
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         <h1 className={styles.pageTitle}>로그인</h1>
 
         <form onSubmit={handleLogin} className={styles.form}>
-          {error && <Alert>{error}</Alert>}
+          {error && (
+            <div>
+              <Alert>{error}</Alert>
+              {isEmailNotConfirmed && !resendSuccess && (
+                <div className={styles.resendArea}>
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    disabled={resendLoading}
+                    onClick={handleResend}
+                  >
+                    {resendLoading ? '전송 중...' : '인증 메일 재전송'}
+                  </Button>
+                </div>
+              )}
+              {resendSuccess && (
+                <div className={styles.resendArea}>
+                  <Alert variant="info">인증 메일을 다시 보냈어요. 메일함을 확인해주세요.</Alert>
+                </div>
+              )}
+            </div>
+          )}
 
           <Input
             label="아이디"
