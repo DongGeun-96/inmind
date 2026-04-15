@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, MessageCircle, Eye, Flag, Pencil, Trash2, Send } from 'lucide-react';
+import DOMPurify from 'isomorphic-dompurify';
 import { createClient } from '@/lib/supabase-client';
 import { formatDate } from '@/lib/format';
 import { BOARD_CONFIG, CATEGORIES, type Post, type Comment, type BoardType } from '@/types/database';
@@ -248,11 +249,14 @@ export default function PostDetailClient({
         <div
           className={styles.articleContent}
           dangerouslySetInnerHTML={{
-            __html: post.content.includes('<') ? post.content : post.content.split('\n').map((line) => {
-              const imageMatch = line.match(/\[이미지\]\((https?:\/\/.+?)\)/);
-              if (imageMatch) return `<img src="${imageMatch[1]}" alt="첨부 이미지" class="${styles.contentImage}" />`;
-              return `<p>${line || '&nbsp;'}</p>`;
-            }).join(''),
+            __html: DOMPurify.sanitize(
+              post.content.includes('<') ? post.content : post.content.split('\n').map((line) => {
+                const imageMatch = line.match(/\[이미지\]\((https?:\/\/.+?)\)/);
+                if (imageMatch) return `<img src="${imageMatch[1]}" alt="첨부 이미지" class="${styles.contentImage}" />`;
+                return `<p>${line || '&nbsp;'}</p>`;
+              }).join(''),
+              { ADD_ATTR: ['class'] }
+            ),
           }}
         />
 

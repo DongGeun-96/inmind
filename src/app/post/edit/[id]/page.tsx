@@ -62,7 +62,8 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
         if (!file) return;
         if (!ALLOWED_TYPES.includes(file.type)) { alert('JPG, PNG, GIF, WEBP 파일만 업로드할 수 있어요.'); return; }
         if (file.size > MAX_FILE_SIZE) { alert('파일 크기는 5MB 이하만 가능해요.'); return; }
-        const fileExt = file.name.split('.').pop();
+        const fileExt = file.name.split('.').pop()?.toLowerCase();
+        if (!fileExt || !['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(fileExt)) { alert('허용되지 않는 파일 형식이에요.'); return; }
         const fileName = `${userId}/${Date.now()}.${fileExt}`;
         const { error } = await supabase.storage.from('post-images').upload(fileName, file);
         if (error) { alert('이미지 업로드에 실패했어요.'); return; }

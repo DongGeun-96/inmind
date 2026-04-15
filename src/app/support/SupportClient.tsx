@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { PenLine, Headphones, ChevronDown, ChevronUp, Clock, CheckCircle } from 'lucide-react';
+import DOMPurify from 'isomorphic-dompurify';
 import { createClient } from '@/lib/supabase-client';
 import { Input } from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
@@ -195,7 +196,7 @@ export default function SupportClient({ inquiries: initialInquiries, userId }: P
                   <div className={styles.itemBody}>
                     <div className={styles.inquiryContent}>
                       <span className={styles.contentLabel}>문의 내용</span>
-                      <div dangerouslySetInnerHTML={{ __html: item.content }} />
+                      <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.content) }} />
                     </div>
                     {item.reply && (
                       <div className={styles.replyContent}>

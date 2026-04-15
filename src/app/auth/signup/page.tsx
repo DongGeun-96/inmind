@@ -100,8 +100,8 @@ export default function SignupPage() {
       setError('이메일 주소가 일치하지 않아요.');
       return;
     }
-    if (password.length < 6) {
-      setError('비밀번호는 6자 이상이어야 해요.');
+    if (password.length < 8) {
+      setError('비밀번호는 8자 이상이어야 해요.');
       return;
     }
     if (password !== confirmPassword) {
@@ -190,7 +190,7 @@ export default function SignupPage() {
             type={showPassword ? 'text' : 'password'}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="6자 이상 입력해주세요"
+            placeholder="8자 이상 입력해주세요"
             icon={<Lock size={18} />}
             iconRight={showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             onIconRightClick={() => setShowPassword(!showPassword)}

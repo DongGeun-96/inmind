@@ -82,7 +82,8 @@ function WriteForm() {
         if (!file) return;
         if (!ALLOWED_TYPES.includes(file.type)) { alert('JPG, PNG, GIF, WEBP 파일만 업로드할 수 있어요.'); return; }
         if (file.size > MAX_FILE_SIZE) { alert('파일 크기는 5MB 이하만 가능해요.'); return; }
-        const fileExt = file.name.split('.').pop();
+        const fileExt = file.name.split('.').pop()?.toLowerCase();
+        if (!fileExt || !['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(fileExt)) { alert('허용되지 않는 파일 형식이에요.'); return; }
         const fileName = `${userId}/${Date.now()}.${fileExt}`;
         const { error } = await supabase.storage.from('post-images').upload(fileName, file);
         if (error) { alert('이미지 업로드에 실패했어요.'); return; }
@@ -125,13 +126,19 @@ function WriteForm() {
 
     const { data: userData } = await supabase
       .from('users')
-      .select('is_banned')
+      .select('is_banned, role')
       .eq('id', userId)
       .single();
 
     if (userData?.is_banned) {
       await supabase.auth.signOut();
       window.location.href = '/banned';
+      return;
+    }
+
+    if (BOARD_CONFIG[boardType]?.adminOnly && userData?.role !== 'admin') {
+      alert('관리자만 작성할 수 있는 게시판이에요.');
+      setLoading(false);
       return;
     }
 

@@ -51,6 +51,8 @@ export default function MypageClient({ profile, myPosts, myComments, myEmpathies
 
   // 회원 탈퇴
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [deleteError, setDeleteError] = useState('');
   const [deleting, setDeleting] = useState(false);
 
   const handleNicknameUpdate = async () => {
@@ -83,8 +85,8 @@ export default function MypageClient({ profile, myPosts, myComments, myEmpathies
       setPasswordError(true);
       return;
     }
-    if (newPassword.length < 6) {
-      setPasswordMessage('새 비밀번호는 6자 이상이어야 해요');
+    if (newPassword.length < 8) {
+      setPasswordMessage('새 비밀번호는 8자 이상이어야 해요');
       setPasswordError(true);
       return;
     }
@@ -127,8 +129,24 @@ export default function MypageClient({ profile, myPosts, myComments, myEmpathies
   };
 
   const handleDeleteAccount = async () => {
+    if (!deletePassword) {
+      setDeleteError('비밀번호를 입력해주세요.');
+      return;
+    }
     setDeleting(true);
+    setDeleteError('');
     const supabase = createClient();
+
+    const { error: signInError } = await supabase.auth.signInWithPassword({
+      email: profile?.email || '',
+      password: deletePassword,
+    });
+
+    if (signInError) {
+      setDeleteError('비밀번호가 일치하지 않아요.');
+      setDeleting(false);
+      return;
+    }
 
     if (profile?.id) {
       await supabase.from('users').delete().eq('id', profile.id);
@@ -305,7 +323,7 @@ export default function MypageClient({ profile, myPosts, myComments, myEmpathies
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   className={styles.nicknameInput}
-                  placeholder="6자 이상 입력"
+                  placeholder="8자 이상 입력"
                 />
               </div>
               <div className={styles.profileField}>
@@ -340,12 +358,20 @@ export default function MypageClient({ profile, myPosts, myComments, myEmpathies
                 </Button>
               ) : (
                 <div className={styles.deleteConfirm}>
-                  <p className={styles.deleteConfirmText}>정말 탈퇴하시겠어요?</p>
+                  <p className={styles.deleteConfirmText}>비밀번호를 입력하면 탈퇴가 진행돼요.</p>
+                  <input
+                    type="password"
+                    value={deletePassword}
+                    onChange={(e) => setDeletePassword(e.target.value)}
+                    placeholder="현재 비밀번호"
+                    className={styles.nicknameInput}
+                  />
+                  {deleteError && <p className={`${styles.message} ${styles.error}`}>{deleteError}</p>}
                   <div className={styles.deleteConfirmButtons}>
-                    <Button size="sm" variant="danger" onClick={handleDeleteAccount} disabled={deleting}>
+                    <Button size="sm" variant="danger" onClick={handleDeleteAccount} disabled={deleting || !deletePassword}>
                       {deleting ? '처리 중...' : '탈퇴하기'}
                     </Button>
-                    <Button size="sm" onClick={() => setShowDeleteConfirm(false)}>
+                    <Button size="sm" onClick={() => { setShowDeleteConfirm(false); setDeletePassword(''); setDeleteError(''); }}>
                       취소
                     </Button>
                   </div>

@@ -23,7 +23,7 @@ export default async function SearchPage({ searchParams }: Props) {
       .from('posts')
       .select('*, user:users(nickname), empathy_count:empathies(count), comment_count:comments(count)')
       .eq('is_public', true)
-      .or(`title.ilike.%${query}%,content.ilike.%${query}%`)
+      .or(`title.ilike.%${query.replace(/[%_,().]/g, '\\$&')}%,content.ilike.%${query.replace(/[%_,().]/g, '\\$&')}%`)
       .order('created_at', { ascending: false })
       .limit(50);
 
