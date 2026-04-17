@@ -25,10 +25,19 @@ export async function updateSession(request: NextRequest) {
     }
   );
 
+  const pathname = request.nextUrl.pathname;
+  const skipBanCheck = pathname.startsWith('/auth') ||
+    pathname.startsWith('/banned') ||
+    pathname.startsWith('/api') ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml' ||
+    pathname === '/feed.xml' ||
+    pathname === '/manifest.webmanifest';
+
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Check if logged-in user is banned
-  if (user && !request.nextUrl.pathname.startsWith('/banned')) {
+  // Check if logged-in user is banned (skip for auth/api/static routes)
+  if (user && !skipBanCheck) {
     const { data: userData } = await supabase
       .from('users')
       .select('is_banned')
@@ -39,7 +48,6 @@ export async function updateSession(request: NextRequest) {
       await supabase.auth.signOut();
       const bannedUrl = request.nextUrl.clone();
       bannedUrl.pathname = '/banned';
-      // Clear auth cookies in the redirect response
       const redirectResponse = NextResponse.redirect(bannedUrl);
       supabaseResponse.cookies.getAll().forEach((cookie) => {
         redirectResponse.cookies.set(cookie.name, cookie.value, {
