@@ -64,7 +64,7 @@ export default function BoardClient({ boardType, config, notices, posts, current
           <ul className={styles.noticeList}>
             {notices.map((post) => (
               <li key={post.id} className={styles.noticeItem}>
-                <PostItem post={post} />
+                <PostItem post={post} variant="list" />
               </li>
             ))}
           </ul>
@@ -78,7 +78,7 @@ export default function BoardClient({ boardType, config, notices, posts, current
           <ul>
             {posts.map((post) => (
               <li key={post.id} className={styles.listItem}>
-                <PostItem post={post} showBoard={isAllView} />
+                <PostItem post={post} showBoard={isAllView} variant="list" />
               </li>
             ))}
           </ul>

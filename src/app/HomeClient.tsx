@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import PostItem from '@/components/PostItem';
 import Sidebar from '@/components/Sidebar';
+import FloatingWriteButton from '@/components/FloatingWriteButton';
 import type { Post } from '@/types/database';
 import styles from './home.module.css';
 
@@ -35,10 +36,10 @@ export default function HomeClient({ allPosts, popularPosts }: HomeClientProps) 
         {posts.length === 0 ? (
           <p className={styles.empty}>아직 게시글이 없어요</p>
         ) : (
-          <ul>
+          <ul className={styles.cardGrid}>
             {posts.map((post) => (
-              <li key={post.id} className={styles.listItem}>
-                <PostItem post={post} showBoard />
+              <li key={post.id} className={styles.cardItem}>
+                <PostItem post={post} showBoard variant="card" />
               </li>
             ))}
           </ul>
@@ -46,6 +47,7 @@ export default function HomeClient({ allPosts, popularPosts }: HomeClientProps) 
       </div>
 
       <Sidebar />
+      <FloatingWriteButton href="/board/write" />
     </div>
   );
 }

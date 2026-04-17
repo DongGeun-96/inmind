@@ -11,6 +11,24 @@ export function timeAgo(dateStr: string): string {
   return date.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' });
 }
 
+export function stripHtmlToText(html: string, maxLength = 120): string {
+  if (!html) return '';
+  // 이미지/태그 제거
+  const withoutTags = html
+    .replace(/<img[^>]*>/gi, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\[이미지\]\([^)]+\)/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (withoutTags.length <= maxLength) return withoutTags;
+  return withoutTags.slice(0, maxLength).trimEnd() + '…';
+}
+
 export function formatDate(dateStr: string): string {
   const d = new Date(dateStr);
   const year = d.getFullYear();
