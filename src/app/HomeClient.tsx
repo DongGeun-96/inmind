@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+import { ClipboardCheck, HelpCircle } from 'lucide-react';
 import PostItem from '@/components/PostItem';
 import Sidebar from '@/components/Sidebar';
 import DailyQuoteCard from '@/components/DailyQuoteCard';
@@ -25,6 +27,17 @@ export default function HomeClient({ allPosts, popularPosts, todayQuote, todayMo
       <div className={styles.main}>
         {todayQuote && <DailyQuoteCard quote={todayQuote} />}
         {isLoggedIn && <MoodCheckCard todayMood={todayMood} />}
+
+        <div className={styles.quickLinks}>
+          <Link href="/test" className={styles.quickLink}>
+            <ClipboardCheck size={18} />
+            <span>자가진단</span>
+          </Link>
+          <Link href="/help" className={styles.quickLink}>
+            <HelpCircle size={18} />
+            <span>도움말 모음</span>
+          </Link>
+        </div>
 
         <div className={styles.tabs}>
           <button

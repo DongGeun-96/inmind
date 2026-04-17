@@ -13,6 +13,34 @@
   min-width: 0;
 }
 
+/* Quick links */
+.quickLinks {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.quickLink {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: #f0f3ff;
+  border: 1px solid #dde3ff;
+  border-radius: var(--radius-md);
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.quickLink:hover {
+  background: #e8ecff;
+  box-shadow: var(--shadow-sm);
+}
+
 /* Tabs */
 .tabs {
   display: flex;

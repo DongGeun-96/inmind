@@ -12,6 +12,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${siteUrl}/terms`, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${siteUrl}/privacy`, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${siteUrl}/support`, changeFrequency: 'monthly', priority: 0.4 },
+    { url: `${siteUrl}/test`, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${siteUrl}/test/phq9`, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${siteUrl}/test/gad7`, changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${siteUrl}/help`, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${siteUrl}/help/depression-first-steps`, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${siteUrl}/help/pet-loss`, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${siteUrl}/help/human-loss`, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${siteUrl}/help/sleep`, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${siteUrl}/help/panic`, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${siteUrl}/help/burnout`, changeFrequency: 'monthly', priority: 0.5 },
   ];
 
   // 게시판 페이지
