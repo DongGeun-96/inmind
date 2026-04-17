@@ -100,7 +100,10 @@ export default function SignupPage() {
   };
 
   const allChecked = agreeTerms && agreePrivacy && agreeAge;
-  if (allChecked && !agreeAll) setAgreeAll(true);
+
+  useEffect(() => {
+    if (allChecked && !agreeAll) setAgreeAll(true);
+  }, [allChecked, agreeAll]);
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
