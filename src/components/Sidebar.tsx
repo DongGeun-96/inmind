@@ -1,8 +1,21 @@
+import Link from 'next/link';
+import { ClipboardCheck, HelpCircle } from 'lucide-react';
 import styles from './Sidebar.module.css';
 
 export default function Sidebar() {
   return (
     <aside className={styles.sidebar}>
+      <div className={styles.quickLinks}>
+        <Link href="/test" className={styles.quickLink}>
+          <ClipboardCheck size={18} />
+          <span>자가진단</span>
+        </Link>
+        <Link href="/help" className={styles.quickLink}>
+          <HelpCircle size={18} />
+          <span>도움말 모음</span>
+        </Link>
+      </div>
+
       <div className={styles.crisisBox}>
         <h3 className={styles.crisisTitle}>위기상담 연락처</h3>
         <ul className={styles.crisisList}>

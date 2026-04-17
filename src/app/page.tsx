@@ -4,13 +4,9 @@ import HomeClient from './HomeClient';
 export default async function HomePage() {
   const supabase = await createClient();
 
-  // Fetch user session + today's mood in parallel with posts
-  const { data: { session } } = await supabase.auth.getSession();
-  const user = session?.user ?? null;
-
   const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' });
 
-  const [{ data: allPosts }, { data: popularPostsRaw }, { data: quotes }, todayMoodResult] = await Promise.all([
+  const [{ data: allPosts }, { data: popularPostsRaw }, { data: quotes }] = await Promise.all([
     supabase
       .from('posts')
       .select('*, user:users(nickname), empathy_count:empathies(count), comment_count:comments(count)')
@@ -28,14 +24,6 @@ export default async function HomePage() {
     supabase
       .from('daily_quotes')
       .select('*'),
-    user
-      ? supabase
-          .from('mood_entries')
-          .select('*')
-          .eq('user_id', user.id)
-          .eq('entry_date', today)
-          .single()
-      : Promise.resolve({ data: null }),
   ]);
 
   // Sort popular posts by empathy count
@@ -61,8 +49,6 @@ export default async function HomePage() {
       allPosts={allPosts || []}
       popularPosts={popularPosts}
       todayQuote={todayQuote}
-      todayMood={todayMoodResult?.data ?? null}
-      isLoggedIn={!!user}
     />
   );
 }
