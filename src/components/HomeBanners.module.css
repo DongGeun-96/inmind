@@ -1,0 +1,170 @@
+.banners {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.banner {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  padding: 22px 20px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  isolation: isolate;
+}
+
+.banner:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+}
+
+.bannerGlow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.35;
+  background: radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.6), transparent 55%);
+  pointer-events: none;
+}
+
+.magazine {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 55%, #ffb199 100%);
+  color: #4b1d2b;
+}
+
+.test {
+  background: linear-gradient(135deg, #667eea 0%, #8a95f1 55%, #9f7cf6 100%);
+  color: #fff;
+}
+
+.bannerBody {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bannerHead {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bannerTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+
+.magazine .bannerTag {
+  background: rgba(255, 255, 255, 0.55);
+  color: #b6404f;
+}
+
+.test .bannerTag {
+  background: rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+.bannerTitle {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-top: 2px;
+}
+
+.bannerDesc {
+  font-size: 13px;
+  opacity: 0.88;
+  line-height: 1.45;
+  margin-top: 4px;
+}
+
+.magazine .bannerDesc {
+  color: #6a2d3a;
+}
+
+.bannerCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 14px;
+  padding: 7px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+  width: fit-content;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.magazine .bannerCta {
+  background: rgba(255, 255, 255, 0.65);
+  color: #b6404f;
+}
+
+.test .bannerCta {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.banner:hover .bannerCta {
+  transform: translateX(2px);
+}
+
+.bannerIcon {
+  position: absolute;
+  right: -14px;
+  bottom: -14px;
+  opacity: 0.18;
+  transform: rotate(-10deg);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.magazine .bannerIcon {
+  color: #fff;
+  opacity: 0.35;
+}
+
+.test .bannerIcon {
+  color: #fff;
+  opacity: 0.22;
+}
+
+@media (max-width: 600px) {
+  .banners {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .banner {
+    min-height: 120px;
+    padding: 18px 18px;
+  }
+
+  .bannerTitle {
+    font-size: 18px;
+  }
+
+  .bannerIcon {
+    right: -18px;
+    bottom: -18px;
+  }
+}

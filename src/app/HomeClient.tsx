@@ -4,6 +4,7 @@ import { useState } from 'react';
 import PostItem from '@/components/PostItem';
 import Sidebar from '@/components/Sidebar';
 import FloatingWriteButton from '@/components/FloatingWriteButton';
+import HomeBanners from '@/components/HomeBanners';
 import type { Post } from '@/types/database';
 import styles from './home.module.css';
 
@@ -19,6 +20,7 @@ export default function HomeClient({ allPosts, popularPosts }: HomeClientProps) 
   return (
     <div className={styles.layout}>
       <div className={styles.main}>
+        <HomeBanners />
         <div className={styles.tabs}>
           <button
             className={`${styles.tab} ${tab === 'all' ? styles.tabActive : ''}`}
