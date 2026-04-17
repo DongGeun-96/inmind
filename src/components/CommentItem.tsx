@@ -44,7 +44,7 @@ export default function CommentItem({
     <div className={styles.comment}>
       <div className={styles.header}>
         <span className={styles.nickname}>{displayName}</span>
-        <span className={styles.time}>{timeAgo(comment.created_at)}</span>
+        <span className={styles.time} suppressHydrationWarning>{timeAgo(comment.created_at)}</span>
       </div>
       <p className={styles.content}>{comment.content}</p>
       <div className={styles.actions}>
@@ -103,7 +103,7 @@ export default function CommentItem({
                 <div className={styles.replyHeader}>
                   <CornerDownRight size={12} className={styles.replyIcon} />
                   <span className={styles.nickname}>{replyName}</span>
-                  <span className={styles.time}>{timeAgo(reply.created_at)}</span>
+                  <span className={styles.time} suppressHydrationWarning>{timeAgo(reply.created_at)}</span>
                 </div>
                 <p className={styles.replyContent}>{reply.content}</p>
                 <div className={styles.replyActions}>

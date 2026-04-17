@@ -43,7 +43,7 @@ export default function PostItem({
           {showBoard && boardConfig && <span className={styles.board}>{boardConfig.category} ・ {boardConfig.label}</span>}
           <span className={styles.author}>{displayName}</span>
           <span className={styles.dot}>·</span>
-          <span>{timeAgo(post.created_at)}</span>
+          <span suppressHydrationWarning>{timeAgo(post.created_at)}</span>
           <span className={styles.dot}>·</span>
           <span className={styles.stat}><Eye size={12} /> {post.view_count}</span>
           <span className={styles.dot}>·</span>

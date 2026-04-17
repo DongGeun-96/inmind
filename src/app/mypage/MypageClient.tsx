@@ -249,7 +249,7 @@ export default function MypageClient({ profile, myPosts, myComments, myEmpathies
                       </Link>
                     )}
                     <p className={styles.commentContent}>{comment.content}</p>
-                    <span className={styles.commentTime}>{timeAgo(comment.created_at)}</span>
+                    <span className={styles.commentTime} suppressHydrationWarning>{timeAgo(comment.created_at)}</span>
                   </li>
                 ))}
               </ul>
