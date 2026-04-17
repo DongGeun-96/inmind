@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { User as UserIcon, Lock, AlertTriangle, Shield } from 'lucide-react';
+import { User as UserIcon, Lock, AlertTriangle, Shield, SmilePlus, BookHeart } from 'lucide-react';
 import { createClient } from '@/lib/supabase-client';
 import { toKoreanError } from '@/lib/error-messages';
 import { timeAgo } from '@/lib/format';
@@ -201,6 +201,18 @@ export default function MypageClient({ profile, myPosts, myComments, myEmpathies
             <span className={styles.statLabel}>공감</span>
           </div>
         </div>
+      </div>
+
+      {/* Quick links */}
+      <div className={styles.quickLinks}>
+        <Link href="/mypage/mood" className={styles.quickLink}>
+          <SmilePlus size={18} />
+          <span>감정 기록</span>
+        </Link>
+        <Link href="/mypage/diary" className={styles.quickLink}>
+          <BookHeart size={18} />
+          <span>감정 일기</span>
+        </Link>
       </div>
 
       {/* Tabs */}

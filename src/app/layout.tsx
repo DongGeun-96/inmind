@@ -5,6 +5,7 @@ import TopBar from '@/components/TopBar';
 import Navbar from '@/components/Navbar';
 import MenuBar from '@/components/MenuBar';
 import Footer from '@/components/Footer';
+import SafetyButton from '@/components/SafetyButton';
 import { CATEGORIES } from '@/types/database';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
@@ -86,6 +87,7 @@ export default function RootLayout({
         <MenuBar categories={CATEGORIES} />
         <main className={styles.main}>{children}</main>
         <Footer />
+        <SafetyButton />
       </body>
     </html>
   );

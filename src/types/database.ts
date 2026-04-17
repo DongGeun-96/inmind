@@ -93,6 +93,43 @@ export interface Notification {
   created_at: string;
 }
 
+// Mood & Diary types
+export type MoodType = 'happy' | 'okay' | 'tired' | 'sad' | 'angry';
+
+export interface MoodEntry {
+  id: string;
+  user_id: string;
+  mood: MoodType;
+  note: string | null;
+  entry_date: string;
+  created_at: string;
+}
+
+export interface DailyQuote {
+  id: string;
+  text: string;
+  author: string | null;
+  created_at: string;
+}
+
+export interface DiaryEntry {
+  id: string;
+  user_id: string;
+  emotion: string;
+  reason: string | null;
+  message_to_self: string | null;
+  entry_date: string;
+  created_at: string;
+}
+
+export const MOOD_CONFIG: Record<MoodType, { emoji: string; label: string }> = {
+  happy: { emoji: '😊', label: '좋아요' },
+  okay: { emoji: '🙂', label: '괜찮아요' },
+  tired: { emoji: '😮‍💨', label: '피곤해요' },
+  sad: { emoji: '😔', label: '우울해요' },
+  angry: { emoji: '😤', label: '화가나요' },
+};
+
 export const BOARD_CONFIG: Record<
   BoardType,
   { label: string; category: string; description: string; requireAuth: boolean; adminOnly?: boolean }

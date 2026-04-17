@@ -3,21 +3,29 @@
 import { useState } from 'react';
 import PostItem from '@/components/PostItem';
 import Sidebar from '@/components/Sidebar';
-import type { Post } from '@/types/database';
+import DailyQuoteCard from '@/components/DailyQuoteCard';
+import MoodCheckCard from '@/components/MoodCheckCard';
+import type { Post, DailyQuote, MoodEntry } from '@/types/database';
 import styles from './home.module.css';
 
 interface HomeClientProps {
   allPosts: Post[];
   popularPosts: Post[];
+  todayQuote: DailyQuote | null;
+  todayMood: MoodEntry | null;
+  isLoggedIn: boolean;
 }
 
-export default function HomeClient({ allPosts, popularPosts }: HomeClientProps) {
+export default function HomeClient({ allPosts, popularPosts, todayQuote, todayMood, isLoggedIn }: HomeClientProps) {
   const [tab, setTab] = useState<'all' | 'popular'>('all');
   const posts = tab === 'all' ? allPosts : popularPosts;
 
   return (
     <div className={styles.layout}>
       <div className={styles.main}>
+        {todayQuote && <DailyQuoteCard quote={todayQuote} />}
+        {isLoggedIn && <MoodCheckCard todayMood={todayMood} />}
+
         <div className={styles.tabs}>
           <button
             className={`${styles.tab} ${tab === 'all' ? styles.tabActive : ''}`}

@@ -1,0 +1,138 @@
+.wrapper {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.fab {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff4545, #ff8c42);
+  box-shadow: 0 4px 16px rgba(255, 69, 69, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 20px rgba(255, 69, 69, 0.5);
+}
+
+.fab:active {
+  transform: scale(0.96);
+}
+
+/* Panel */
+.panel {
+  width: 280px;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  animation: slideUp 0.2s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 0;
+}
+
+.panelTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-crisis);
+}
+
+.closeBtn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--color-text-muted);
+  transition: background 0.15s;
+}
+
+.closeBtn:hover {
+  background: var(--color-bg-hover);
+}
+
+.panelDesc {
+  padding: 6px 16px 12px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.phoneList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.phoneLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: background 0.1s;
+}
+
+.phoneLink:hover {
+  background: var(--color-bg-hover);
+}
+
+.phoneName {
+  flex: 1;
+  font-weight: 500;
+}
+
+.phoneNumber {
+  font-weight: 700;
+  color: var(--color-crisis);
+}
+
+.phoneDesc {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+@media (min-width: 768px) {
+  .wrapper {
+    bottom: 24px;
+    right: 24px;
+  }
+
+  .panel {
+    width: 320px;
+  }
+}
