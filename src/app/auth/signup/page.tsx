@@ -16,26 +16,8 @@ export default function SignupPage() {
   const supabase = createClient();
   const [username, setUsername] = useState('');
   const [nickname, setNickname] = useState('');
-  const [emailLocal, setEmailLocal] = useState('');
-  const [emailDomain, setEmailDomain] = useState('naver.com');
-  const [emailCustomDomain, setEmailCustomDomain] = useState('');
-  const [confirmEmailLocal, setConfirmEmailLocal] = useState('');
-  const [confirmEmailDomain, setConfirmEmailDomain] = useState('naver.com');
-  const [confirmEmailCustomDomain, setConfirmEmailCustomDomain] = useState('');
-
-  const EMAIL_DOMAINS = [
-    'naver.com',
-    'gmail.com',
-    'daum.net',
-    'kakao.com',
-    'hanmail.net',
-    'nate.com',
-    'icloud.com',
-    'direct',
-  ];
-
-  const email = emailLocal ? `${emailLocal}@${emailDomain === 'direct' ? emailCustomDomain : emailDomain}` : '';
-  const confirmEmail = confirmEmailLocal ? `${confirmEmailLocal}@${confirmEmailDomain === 'direct' ? confirmEmailCustomDomain : confirmEmailDomain}` : '';
+  const [email, setEmail] = useState('');
+  const [confirmEmail, setConfirmEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -281,80 +263,30 @@ export default function SignupPage() {
           </div>
 
           <div className={styles.fieldGroup}>
-            <label className={styles.fieldLabel}>이메일 주소</label>
-            <div className={styles.emailRow}>
-              <input
-                type="text"
-                value={emailLocal}
-                onChange={(e) => setEmailLocal(e.target.value)}
-                placeholder="이메일"
-                className={styles.emailInput}
-                required
-              />
-              <span className={styles.emailAt}>@</span>
-              {emailDomain === 'direct' ? (
-                <input
-                  type="text"
-                  value={emailCustomDomain}
-                  onChange={(e) => setEmailCustomDomain(e.target.value)}
-                  placeholder="직접 입력"
-                  className={styles.emailInput}
-                  required
-                />
-              ) : (
-                <span className={styles.emailDomainText}>{emailDomain}</span>
-              )}
-              <select
-                value={emailDomain}
-                onChange={(e) => setEmailDomain(e.target.value)}
-                className={styles.emailSelect}
-              >
-                {EMAIL_DOMAINS.map(d => (
-                  <option key={d} value={d}>{d === 'direct' ? '직접 입력' : d}</option>
-                ))}
-              </select>
-            </div>
+            <Input
+              label="이메일 주소"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="이메일 주소를 입력해주세요"
+              icon={<Mail size={18} />}
+              required
+            />
             <div className={styles.fieldHint}>
               <p>메일주소는 메일인증 후 비밀번호 변경이나 찾기 등에 사용됩니다.</p>
               <p>인증 메일이 보이지 않으면 스팸보관함을 열어보시길 바랍니다.</p>
             </div>
           </div>
 
-          <div className={styles.fieldGroup}>
-            <label className={styles.fieldLabel}>이메일 주소 확인</label>
-            <div className={styles.emailRow}>
-              <input
-                type="text"
-                value={confirmEmailLocal}
-                onChange={(e) => setConfirmEmailLocal(e.target.value)}
-                placeholder="이메일"
-                className={styles.emailInput}
-                required
-              />
-              <span className={styles.emailAt}>@</span>
-              {confirmEmailDomain === 'direct' ? (
-                <input
-                  type="text"
-                  value={confirmEmailCustomDomain}
-                  onChange={(e) => setConfirmEmailCustomDomain(e.target.value)}
-                  placeholder="직접 입력"
-                  className={styles.emailInput}
-                  required
-                />
-              ) : (
-                <span className={styles.emailDomainText}>{confirmEmailDomain}</span>
-              )}
-              <select
-                value={confirmEmailDomain}
-                onChange={(e) => setConfirmEmailDomain(e.target.value)}
-                className={styles.emailSelect}
-              >
-                {EMAIL_DOMAINS.map(d => (
-                  <option key={`confirm-${d}`} value={d}>{d === 'direct' ? '직접 입력' : d}</option>
-                ))}
-              </select>
-            </div>
-          </div>
+          <Input
+            label="이메일 주소 확인"
+            type="email"
+            value={confirmEmail}
+            onChange={(e) => setConfirmEmail(e.target.value)}
+            placeholder="이메일 주소를 다시 입력해주세요"
+            icon={<Mail size={18} />}
+            required
+          />
 
           {/* 약관 동의 */}
           <div className={styles.agreements}>
