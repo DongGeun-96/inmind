@@ -1,0 +1,146 @@
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.backBtn:hover {
+  color: var(--color-text);
+}
+
+/* Header Card */
+.headerCard {
+  background: linear-gradient(135deg, #10b981, #34d399);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  margin-bottom: 20px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.description {
+  font-size: 13px;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+
+.headerIcon {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Form */
+.formCard {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.textareaGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  color: var(--color-text);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  resize: vertical;
+  outline: none;
+  line-height: 1.7;
+  font-family: inherit;
+}
+
+.textarea:focus {
+  border-color: var(--color-accent);
+}
+
+.textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.formActions {
+  display: flex;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.formActions > * {
+  flex: 1;
+}
+
+/* Success */
+.successCard {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 48px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.successIcon {
+  color: #10b981;
+}
+
+.successTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.successDesc {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
