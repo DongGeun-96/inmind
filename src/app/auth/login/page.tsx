@@ -137,6 +137,8 @@ export default function LoginPage() {
           </Button>
 
           <div className={styles.links}>
+            <Link href="/auth/find-username" className={styles.link}>아이디 찾기</Link>
+            <span className={styles.divider}>|</span>
             <Link href="/auth/forgot-password" className={styles.link}>비밀번호 찾기</Link>
             <span className={styles.divider}>|</span>
             <Link href="/auth/signup" className={styles.link}>회원가입</Link>
