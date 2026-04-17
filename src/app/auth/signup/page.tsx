@@ -25,7 +25,9 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [usernameStatus, setUsernameStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
+  const [nicknameStatus, setNicknameStatus] = useState<'idle' | 'checking' | 'available' | 'taken'>('idle');
   const usernameTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const nicknameTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const checkUsername = useCallback(async (value: string) => {
     if (value.length < 4 || !/^[a-zA-Z0-9_]+$/.test(value)) {
@@ -41,6 +43,20 @@ export default function SignupPage() {
     setUsernameStatus(data ? 'taken' : 'available');
   }, [supabase]);
 
+  const checkNickname = useCallback(async (value: string) => {
+    if (value.length < 2) {
+      setNicknameStatus('idle');
+      return;
+    }
+    setNicknameStatus('checking');
+    const { data } = await supabase
+      .from('users')
+      .select('id')
+      .eq('nickname', value)
+      .maybeSingle();
+    setNicknameStatus(data ? 'taken' : 'available');
+  }, [supabase]);
+
   const handleUsernameChange = (value: string) => {
     setUsername(value);
     setUsernameStatus('idle');
@@ -50,9 +66,19 @@ export default function SignupPage() {
     }
   };
 
+  const handleNicknameChange = (value: string) => {
+    setNickname(value);
+    setNicknameStatus('idle');
+    if (nicknameTimerRef.current) clearTimeout(nicknameTimerRef.current);
+    if (value.length >= 2) {
+      nicknameTimerRef.current = setTimeout(() => checkNickname(value), 500);
+    }
+  };
+
   useEffect(() => {
     return () => {
       if (usernameTimerRef.current) clearTimeout(usernameTimerRef.current);
+      if (nicknameTimerRef.current) clearTimeout(nicknameTimerRef.current);
     };
   }, []);
 
@@ -94,6 +120,10 @@ export default function SignupPage() {
     }
     if (nickname.length < 2 || nickname.length > 20) {
       setError('닉네임은 2~20자로 입력해주세요.');
+      return;
+    }
+    if (nicknameStatus === 'taken') {
+      setError('이미 사용 중인 닉네임입니다.');
       return;
     }
     if (email !== confirmEmail) {
@@ -210,16 +240,27 @@ export default function SignupPage() {
             required
           />
 
-          <Input
-            label="닉네임"
-            type="text"
-            value={nickname}
-            onChange={(e) => setNickname(e.target.value)}
-            placeholder="커뮤니티에서 사용할 닉네임 (2~20자)"
-            icon={<User size={18} />}
-            required
-            maxLength={20}
-          />
+          <div className={styles.fieldGroup}>
+            <Input
+              label="닉네임"
+              type="text"
+              value={nickname}
+              onChange={(e) => handleNicknameChange(e.target.value)}
+              placeholder="커뮤니티에서 사용할 닉네임 (2~20자)"
+              icon={<User size={18} />}
+              required
+              maxLength={20}
+            />
+            {nicknameStatus === 'checking' && (
+              <p className={styles.usernameChecking}>확인 중...</p>
+            )}
+            {nicknameStatus === 'available' && (
+              <p className={styles.usernameAvailable}>사용 가능한 닉네임입니다</p>
+            )}
+            {nicknameStatus === 'taken' && (
+              <p className={styles.usernameTaken}>이미 사용 중인 닉네임입니다</p>
+            )}
+          </div>
 
           <div className={styles.fieldGroup}>
             <Input
