@@ -148,8 +148,11 @@ export default function MypageClient({ profile, myPosts, myComments, myEmpathies
       return;
     }
 
-    if (profile?.id) {
-      await supabase.from('users').delete().eq('id', profile.id);
+    const res = await fetch('/api/account', { method: 'DELETE' });
+    if (!res.ok) {
+      setDeleteError('탈퇴 처리에 실패했어요.');
+      setDeleting(false);
+      return;
     }
 
     await supabase.auth.signOut();
