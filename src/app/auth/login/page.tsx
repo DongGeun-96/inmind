@@ -31,23 +31,21 @@ export default function LoginPage() {
     setResendSuccess(false);
     setLoading(true);
 
-    // 아이디로 이메일 조회
-    const { data: user } = await supabase
-      .from('users')
-      .select('email')
-      .eq('username', username.trim())
-      .single();
+    // 아이디로 이메일 조회 (보안 함수 사용)
+    const { data: email } = await supabase.rpc('get_email_by_username', {
+      p_username: username.trim(),
+    });
 
-    if (!user) {
+    if (!email) {
       setError('아이디 또는 비밀번호가 올바르지 않아요.');
       setLoading(false);
       return;
     }
 
-    setResolvedEmail(user.email);
+    setResolvedEmail(email);
 
     const { error } = await supabase.auth.signInWithPassword({
-      email: user.email,
+      email,
       password,
     });
 
