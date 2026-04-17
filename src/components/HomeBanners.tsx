@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BookOpen, Sparkles, ClipboardCheck, ArrowRight } from 'lucide-react';
+import { BookOpen, Sparkles, ClipboardCheck } from 'lucide-react';
 import styles from './HomeBanners.module.css';
 
 export default function HomeBanners() {
@@ -14,15 +14,8 @@ export default function HomeBanners() {
               매거진
             </span>
           </div>
-          <h3 className={styles.bannerTitle}>
-            오늘의 힐링,
-            <br />
-            한 페이지
-          </h3>
-          <p className={styles.bannerDesc}>쉼이 필요한 마음에게 권하는 글과 장소</p>
-          <span className={styles.bannerCta}>
-            둘러보기 <ArrowRight size={14} />
-          </span>
+          <h3 className={styles.bannerTitle}>오늘의 힐링, 한 페이지</h3>
+          <p className={styles.bannerDesc}>쉼이 필요한 마음에게</p>
         </div>
         <BookOpen className={styles.bannerIcon} size={80} aria-hidden="true" />
       </Link>
@@ -36,15 +29,8 @@ export default function HomeBanners() {
               심리검사
             </span>
           </div>
-          <h3 className={styles.bannerTitle}>
-            나를 위한
-            <br />
-            심리 체크
-          </h3>
-          <p className={styles.bannerDesc}>5분이면 내 마음 상태를 알 수 있어요</p>
-          <span className={styles.bannerCta}>
-            검사 시작 <ArrowRight size={14} />
-          </span>
+          <h3 className={styles.bannerTitle}>나를 위한 심리 체크</h3>
+          <p className={styles.bannerDesc}>5분이면 충분해요</p>
         </div>
         <ClipboardCheck className={styles.bannerIcon} size={80} aria-hidden="true" />
       </Link>
