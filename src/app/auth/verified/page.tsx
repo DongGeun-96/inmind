@@ -10,10 +10,10 @@ export default function VerifiedPage() {
         <h1 className={styles.title}>이메일 인증 완료</h1>
         <p className={styles.description}>
           이메일 인증이 완료되었어요.<br />
-          지금 바로 로그인해서 인마인드를 이용해보세요.
+          인마인드에 오신 것을 환영합니다!
         </p>
-        <Link href="/auth/login">
-          <Button fullWidth>로그인하기</Button>
+        <Link href="/">
+          <Button fullWidth>시작하기</Button>
         </Link>
       </div>
     </div>
