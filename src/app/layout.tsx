@@ -7,7 +7,7 @@ import MenuBar from '@/components/MenuBar';
 import Footer from '@/components/Footer';
 import { CATEGORIES } from '@/types/database';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://inmind.kr';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
 const SITE_NAME = '인마인드';
 const SITE_DESCRIPTION =
   '소중한 사람이나 반려동물을 잃거나, 심리적 어려움을 겪는 사람들이 공감과 위로를 나눌 수 있는 따뜻한 커뮤니티';

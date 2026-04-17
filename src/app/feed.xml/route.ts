@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase-server';
 import { BOARD_CONFIG, type BoardType } from '@/types/database';
 
 export async function GET() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://inmind.kr';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
   const supabase = await createClient();
 
   const { data: posts } = await supabase

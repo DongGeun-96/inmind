@@ -3,7 +3,7 @@ import { createClient } from '@/lib/supabase-server';
 import { BOARD_CONFIG, type BoardType } from '@/types/database';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://inmind.kr';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
   const supabase = await createClient();
 
   // 정적 페이지

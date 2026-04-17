@@ -51,7 +51,7 @@ export default async function PostPage({ params }: Props) {
 
   if (!post) notFound();
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://inmind.kr';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
   const config = BOARD_CONFIG[post.board_type as BoardType];
 
   // 비공개 게시물은 로그인 필수
