@@ -38,10 +38,10 @@ export default function HomeClient({ allPosts, popularPosts }: HomeClientProps) 
         {posts.length === 0 ? (
           <p className={styles.empty}>아직 게시글이 없어요</p>
         ) : (
-          <ul>
+          <ul className={styles.cardList}>
             {posts.map((post) => (
               <li key={post.id} className={styles.listItem}>
-                <PostItem post={post} showBoard showPreview />
+                <PostItem post={post} showBoard />
               </li>
             ))}
           </ul>
