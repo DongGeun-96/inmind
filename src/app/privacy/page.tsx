@@ -75,7 +75,7 @@ export default function PrivacyPage() {
             <li>서비스 제공을 위해 필요한 범위 내에서 업무 위탁하는 경우</li>
           </ul>
           <p className={styles.text}>
-            개인정보 처리와 관련한 문의 사항은 <strong>contact@inmind.kr</strong>로 연락해주세요.
+            개인정보 처리와 관련한 문의 사항은 <strong>contact@in-mind.dev</strong>로 연락해주세요.
           </p>
         </section>
       </div>

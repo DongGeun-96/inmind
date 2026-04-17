@@ -48,7 +48,7 @@ export default function YouthProtectionPage() {
           </p>
           <ul className={styles.list}>
             <li>담당자: 인마인드 운영팀</li>
-            <li>이메일: contact@inmind.kr</li>
+            <li>이메일: contact@in-mind.dev</li>
           </ul>
         </section>
 

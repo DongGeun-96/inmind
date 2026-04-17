@@ -13,7 +13,7 @@ export default function BannedPage() {
         이용 규칙 위반으로 계정이 정지되었어요.
       </p>
       <p className={styles.contact}>
-        문의: <a href="mailto:contact@inmind.kr" className={styles.email}>contact@inmind.kr</a>
+        문의: <a href="mailto:contact@in-mind.dev" className={styles.email}>contact@in-mind.dev</a>
       </p>
     </div>
   );
