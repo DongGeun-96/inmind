@@ -3,6 +3,7 @@
 
 create table if not exists public.expert_inquiries (
   id uuid primary key default gen_random_uuid(),
+  expert_type text not null check (expert_type in ('hospital', 'counselor')),
   name text not null,
   phone text not null,
   email text,

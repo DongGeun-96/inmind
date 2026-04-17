@@ -13,6 +13,7 @@ export default function ExpertInquiryClient() {
   const supabase = createClient();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [expertType, setExpertType] = useState<'hospital' | 'counselor' | ''>('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
@@ -21,10 +22,11 @@ export default function ExpertInquiryClient() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim() || !phone.trim() || !content.trim()) return;
+    if (!expertType || !name.trim() || !phone.trim() || !content.trim()) return;
     setLoading(true);
 
     const { error } = await supabase.from('expert_inquiries').insert({
+      expert_type: expertType,
       name: name.trim(),
       phone: phone.trim(),
       email: email.trim() || null,
@@ -82,6 +84,34 @@ export default function ExpertInquiryClient() {
       </div>
 
       <form onSubmit={handleSubmit} className={styles.formCard}>
+        <div className={styles.typeGroup}>
+          <label className={styles.label}>유형 *</label>
+          <div className={styles.typeOptions}>
+            <label className={`${styles.typeOption} ${expertType === 'hospital' ? styles.typeOptionActive : ''}`}>
+              <input
+                type="radio"
+                name="expertType"
+                value="hospital"
+                checked={expertType === 'hospital'}
+                onChange={() => setExpertType('hospital')}
+                className={styles.typeRadio}
+              />
+              병원/센터
+            </label>
+            <label className={`${styles.typeOption} ${expertType === 'counselor' ? styles.typeOptionActive : ''}`}>
+              <input
+                type="radio"
+                name="expertType"
+                value="counselor"
+                checked={expertType === 'counselor'}
+                onChange={() => setExpertType('counselor')}
+                className={styles.typeRadio}
+              />
+              개인 상담사
+            </label>
+          </div>
+        </div>
+
         <Input
           label="이름 *"
           type="text"
@@ -137,7 +167,7 @@ export default function ExpertInquiryClient() {
           <Button type="button" variant="secondary" onClick={() => router.back()}>
             취소
           </Button>
-          <Button type="submit" disabled={loading || !name.trim() || !phone.trim() || !content.trim()}>
+          <Button type="submit" disabled={loading || !expertType || !name.trim() || !phone.trim() || !content.trim()}>
             {loading ? '등록 중...' : '문의 등록'}
           </Button>
         </div>
