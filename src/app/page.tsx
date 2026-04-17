@@ -4,9 +4,7 @@ import HomeClient from './HomeClient';
 export default async function HomePage() {
   const supabase = await createClient();
 
-  const today = new Date().toLocaleDateString('sv-SE', { timeZone: 'Asia/Seoul' });
-
-  const [{ data: allPosts }, { data: popularPostsRaw }, { data: quotes }] = await Promise.all([
+  const [{ data: allPosts }, { data: popularPostsRaw }] = await Promise.all([
     supabase
       .from('posts')
       .select('*, user:users(nickname), empathy_count:empathies(count), comment_count:comments(count)')
@@ -21,9 +19,6 @@ export default async function HomePage() {
       .eq('is_notice', false)
       .order('created_at', { ascending: false })
       .limit(100),
-    supabase
-      .from('daily_quotes')
-      .select('*'),
   ]);
 
   // Sort popular posts by empathy count
@@ -35,20 +30,10 @@ export default async function HomePage() {
     })
     .slice(0, 20);
 
-  // Pick today's quote using date-based modulo
-  const allQuotes = quotes || [];
-  let todayQuote = null;
-  if (allQuotes.length > 0) {
-    const dateNum = parseInt(today.replace(/-/g, ''), 10);
-    const index = dateNum % allQuotes.length;
-    todayQuote = allQuotes[index];
-  }
-
   return (
     <HomeClient
       allPosts={allPosts || []}
       popularPosts={popularPosts}
-      todayQuote={todayQuote}
     />
   );
 }

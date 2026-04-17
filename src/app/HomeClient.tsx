@@ -3,25 +3,21 @@
 import { useState } from 'react';
 import PostItem from '@/components/PostItem';
 import Sidebar from '@/components/Sidebar';
-import DailyQuoteCard from '@/components/DailyQuoteCard';
-import type { Post, DailyQuote } from '@/types/database';
+import type { Post } from '@/types/database';
 import styles from './home.module.css';
 
 interface HomeClientProps {
   allPosts: Post[];
   popularPosts: Post[];
-  todayQuote: DailyQuote | null;
 }
 
-export default function HomeClient({ allPosts, popularPosts, todayQuote }: HomeClientProps) {
+export default function HomeClient({ allPosts, popularPosts }: HomeClientProps) {
   const [tab, setTab] = useState<'all' | 'popular'>('all');
   const posts = tab === 'all' ? allPosts : popularPosts;
 
   return (
     <div className={styles.layout}>
       <div className={styles.main}>
-        {todayQuote && <DailyQuoteCard quote={todayQuote} />}
-
         <div className={styles.tabs}>
           <button
             className={`${styles.tab} ${tab === 'all' ? styles.tabActive : ''}`}
