@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { PenLine } from 'lucide-react';
+import { PenLine, UserPlus } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import Pagination from '@/components/ui/Pagination';
 import PostItem from '@/components/PostItem';
@@ -31,6 +31,13 @@ export default function BoardClient({ boardType, config, notices, posts, current
       <div className={styles.main}>
         <div className={styles.header}>
           <h1 className={styles.title}>{category?.name || config.label}</h1>
+          {boardType === 'professional' && (
+            <Link href="/expert-inquiry">
+              <Button size="sm" variant="secondary">
+                <UserPlus size={14} /> 전문가 등록 문의
+              </Button>
+            </Link>
+          )}
         </div>
 
         {siblingBoards.length > 1 && (
