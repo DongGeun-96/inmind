@@ -4,6 +4,8 @@ export type BoardType =
   | 'pet_loss'
   | 'human_loss'
   | 'depression'
+  | 'anxiety'
+  | 'trauma'
   | 'recovery'
   | 'love'
   | 'career'
@@ -13,12 +15,18 @@ export type BoardType =
   | 'workplace'
   | 'study'
   | 'parenting'
+  | 'breakup'
+  | 'appearance'
+  | 'finance'
+  | 'identity'
+  | 'health'
   | 'healing_food'
   | 'healing_place'
   | 'healing_book'
   | 'healing_movie'
   | 'healing_quote'
   | 'healing_etc'
+  | 'daily'
   | 'community_free'
   | 'tips'
   | 'professional';
@@ -164,6 +172,18 @@ export const BOARD_CONFIG: Record<
     description: '우울증, 불안장애 등 심리적 어려움을 익명으로 나누는 커뮤니티',
     requireAuth: false,
   },
+  anxiety: {
+    label: '불안/공황',
+    category: '이야기나눔',
+    description: '불안장애, 공황장애 등 마음의 어려움을 나누는 공간',
+    requireAuth: false,
+  },
+  trauma: {
+    label: '트라우마',
+    category: '이야기나눔',
+    description: '과거의 상처, 트라우마를 안전하게 이야기하는 공간',
+    requireAuth: false,
+  },
   recovery: {
     label: '회복 후기',
     category: '이야기나눔',
@@ -218,6 +238,36 @@ export const BOARD_CONFIG: Record<
     description: '육아 스트레스, 양육 고민을 솔직하게 나누는 부모 커뮤니티',
     requireAuth: false,
   },
+  breakup: {
+    label: '이별/이혼',
+    category: '고민상담소',
+    description: '이별, 이혼 후 마음 정리와 회복을 함께하는 공간',
+    requireAuth: false,
+  },
+  appearance: {
+    label: '외모/자존감',
+    category: '고민상담소',
+    description: '외모 고민, 자존감 회복을 함께 나누는 공간',
+    requireAuth: false,
+  },
+  finance: {
+    label: '금전/사업',
+    category: '고민상담소',
+    description: '경제적 어려움, 사업 스트레스를 나누는 공간',
+    requireAuth: false,
+  },
+  identity: {
+    label: '자아/성격',
+    category: '고민상담소',
+    description: '나는 누구인가, 성격 고민을 나누는 공간',
+    requireAuth: false,
+  },
+  health: {
+    label: '신체건강',
+    category: '고민상담소',
+    description: '건강 불안, 질병 스트레스를 나누는 공간',
+    requireAuth: false,
+  },
   healing_food: {
     label: '음식',
     category: '힐링플레이스',
@@ -254,6 +304,12 @@ export const BOARD_CONFIG: Record<
     description: '음악, 그림 등 다양한 힐링 콘텐츠를 공유하는 공간',
     requireAuth: false,
   },
+  daily: {
+    label: '오늘 한 줄',
+    category: '커뮤니티',
+    description: '오늘의 기분을 한 줄로 나누는 공간',
+    requireAuth: false,
+  },
   community_free: {
     label: '자유',
     category: '커뮤니티',
@@ -284,12 +340,12 @@ export const CATEGORIES = [
   {
     name: '이야기나눔',
     description: '경험을 공유하는 공간',
-    boards: ['pet_loss', 'human_loss', 'depression', 'recovery'] as BoardType[],
+    boards: ['pet_loss', 'human_loss', 'depression', 'anxiety', 'trauma', 'recovery'] as BoardType[],
   },
   {
     name: '고민상담소',
     description: '고민을 나누는 공간',
-    boards: ['love', 'career', 'marriage', 'family', 'relationship', 'workplace', 'study', 'parenting'] as BoardType[],
+    boards: ['love', 'breakup', 'career', 'marriage', 'family', 'relationship', 'workplace', 'study', 'parenting', 'appearance', 'finance', 'identity', 'health'] as BoardType[],
   },
   {
     name: '힐링플레이스',
@@ -299,7 +355,7 @@ export const CATEGORIES = [
   {
     name: '커뮤니티',
     description: '공지사항과 이벤트',
-    boards: ['community_free', 'tips'] as BoardType[],
+    boards: ['daily', 'community_free', 'tips'] as BoardType[],
   },
   {
     name: '전문가 안내',

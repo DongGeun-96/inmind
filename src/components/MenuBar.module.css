@@ -17,6 +17,13 @@
   height: 40px;
   background: var(--color-accent);
   border-radius: var(--radius-sm);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.inner::-webkit-scrollbar {
+  display: none;
 }
 
 .menuLink {
@@ -30,6 +37,7 @@
   font-weight: 600;
   color: rgba(255, 255, 255, 0.8);
   white-space: nowrap;
+  flex-shrink: 0;
   transition: color 0.15s, background 0.15s;
 }
 .menuLink:hover {
