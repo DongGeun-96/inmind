@@ -1,0 +1,108 @@
+.page {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.pageTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 20px;
+}
+
+.accessDenied {
+  padding: 60px 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+/* Summary */
+.summaryRow {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.summaryCard {
+  flex: 1;
+  background: linear-gradient(135deg, var(--color-accent), #7b8cff);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.summaryLabel {
+  font-size: 13px;
+  opacity: 0.85;
+  font-weight: 500;
+}
+
+.summaryValue {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* Card */
+.card {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 14px;
+}
+
+/* Table */
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  border-bottom: 2px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-border-light);
+  color: var(--color-text);
+}
+
+.table tbody tr:hover {
+  background: var(--color-bg-secondary);
+}
+
+.pathCell {
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty {
+  padding: 40px 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}

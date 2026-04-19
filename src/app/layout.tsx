@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { CATEGORIES } from '@/types/database';
+import VisitTracker from '@/components/VisitTracker';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
 const SITE_NAME = '인마인드';
@@ -88,6 +89,7 @@ export default function RootLayout({
         <MenuBar categories={CATEGORIES} />
         <main className={styles.main}>{children}</main>
         <Footer />
+        <VisitTracker />
         <Analytics />
         <SpeedInsights />
       </body>
