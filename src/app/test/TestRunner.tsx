@@ -17,6 +17,10 @@ export interface TestInterpretation {
   min: number;
   max: number;
   warning?: boolean;
+  emoji?: string;
+  tagline?: string;
+  tips?: string[];
+  quote?: string;
 }
 
 export interface TestRunnerProps {
@@ -226,14 +230,31 @@ export default function TestRunner({
         <p className={styles.resultSubtitle}>{title}</p>
       </div>
 
-      <div className={styles.scoreCard}>
-        <p className={styles.scoreNumber}>{totalScore}</p>
-        <p className={styles.scoreMax}>/ {maxScore}점</p>
-        <span className={`${styles.scoreLevel}${isWarning ? ` ${styles.scoreLevelWarning}` : ''}`}>
-          {interpretation.level}
-        </span>
-        <p className={styles.scoreDesc}>{interpretation.desc}</p>
+      <div className={styles.heroCard}>
+        {interpretation.emoji && <div className={styles.heroEmoji}>{interpretation.emoji}</div>}
+        {interpretation.tagline && <p className={styles.heroTagline}>“{interpretation.tagline}”</p>}
+        <div style={{ fontSize: 40, fontWeight: 800, color: 'var(--color-text)', lineHeight: 1 }}>
+          {totalScore}
+          <span style={{ fontSize: 16, fontWeight: 500, color: 'var(--color-text-muted)', marginLeft: 4 }}>/ {maxScore}</span>
+        </div>
+        <h2 className={styles.heroTitle} style={{ marginTop: 12 }}>
+          {isWarning ? '⚠️ ' : ''}{interpretation.level}
+        </h2>
+        <p className={styles.heroDesc}>{interpretation.desc}</p>
       </div>
+
+      {interpretation.tips && interpretation.tips.length > 0 && (
+        <div className={styles.tipBox}>
+          <p className={styles.tipHead}>💡 지금 도움이 될 수 있는 것</p>
+          <ul className={styles.traitList}>
+            {interpretation.tips.map((t, i) => <li key={i}>{t}</li>)}
+          </ul>
+        </div>
+      )}
+
+      {interpretation.quote && (
+        <blockquote className={styles.quoteBox}>“{interpretation.quote}”</blockquote>
+      )}
 
       {crisisTriggered && (
         <div className={styles.crisisWarning}>

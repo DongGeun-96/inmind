@@ -22,6 +22,13 @@ export interface CategoryResult {
   subtitle?: string;
   desc: string;
   emoji?: string;
+  tagline?: string;
+  strengths?: string[];
+  weaknesses?: string[];
+  match?: string;
+  avoid?: string;
+  tip?: string;
+  quote?: string;
 }
 
 export interface CategoryTestRunnerProps {
@@ -231,29 +238,77 @@ export default function CategoryTestRunner({
   return (
     <div className={styles.testContainer}>
       <div className={styles.resultHeader}>
-        <h1 className={styles.resultTitle}>검사 결과</h1>
-        <p className={styles.resultSubtitle}>{title}</p>
+        <p className={styles.resultSubtitle}>{title} 결과</p>
+        <h1 className={styles.resultTitle}>나의 유형은?</h1>
       </div>
 
-      <div className={styles.scoreCard}>
-        {winner.emoji && (
-          <p className={styles.scoreNumber} style={{ fontSize: 48 }}>
-            {winner.emoji}
-          </p>
-        )}
-        <span className={styles.scoreLevel}>{winner.title}</span>
-        {winner.subtitle && <p className={styles.scoreMax}>{winner.subtitle}</p>}
-        <p className={styles.scoreDesc}>{winner.desc}</p>
+      <div className={styles.heroCard}>
+        {winner.emoji && <div className={styles.heroEmoji}>{winner.emoji}</div>}
+        {winner.tagline && <p className={styles.heroTagline}>“{winner.tagline}”</p>}
+        <h2 className={styles.heroTitle}>{winner.title}</h2>
+        {winner.subtitle && <p className={styles.heroSubtitle}>{winner.subtitle}</p>}
+        <p className={styles.heroDesc}>{winner.desc}</p>
       </div>
+
+      {(winner.strengths?.length || winner.weaknesses?.length) && (
+        <div className={styles.traitGrid}>
+          {winner.strengths && winner.strengths.length > 0 && (
+            <div className={`${styles.traitCard} ${styles.traitGood}`}>
+              <p className={styles.traitHead}>✨ 강점</p>
+              <ul className={styles.traitList}>
+                {winner.strengths.map((s, i) => <li key={i}>{s}</li>)}
+              </ul>
+            </div>
+          )}
+          {winner.weaknesses && winner.weaknesses.length > 0 && (
+            <div className={`${styles.traitCard} ${styles.traitBad}`}>
+              <p className={styles.traitHead}>🌪️ 약점</p>
+              <ul className={styles.traitList}>
+                {winner.weaknesses.map((s, i) => <li key={i}>{s}</li>)}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+
+      {(winner.match || winner.avoid) && (
+        <div className={styles.traitGrid}>
+          {winner.match && (
+            <div className={`${styles.traitCard} ${styles.traitMatch}`}>
+              <p className={styles.traitHead}>💞 잘 맞는 사람</p>
+              <p className={styles.traitText}>{winner.match}</p>
+            </div>
+          )}
+          {winner.avoid && (
+            <div className={`${styles.traitCard} ${styles.traitAvoid}`}>
+              <p className={styles.traitHead}>🚫 피해야 할 상황</p>
+              <p className={styles.traitText}>{winner.avoid}</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {winner.tip && (
+        <div className={styles.tipBox}>
+          <p className={styles.tipHead}>💡 오늘의 팁</p>
+          <p className={styles.tipText}>{winner.tip}</p>
+        </div>
+      )}
+
+      {winner.quote && (
+        <blockquote className={styles.quoteBox}>“{winner.quote}”</blockquote>
+      )}
 
       <div className={styles.interpretBox}>
-        <p className={styles.interpretTitle}>다른 유형 한줄 소개</p>
+        <p className={styles.interpretTitle}>다른 유형도 궁금하다면</p>
         {results
           .filter((r) => r.key !== winner.key)
           .map((r) => (
             <div key={r.key} className={styles.interpretItem}>
-              <span className={styles.interpretRange}>{r.title}</span>
-              <span>{r.subtitle ?? ''}</span>
+              <span className={styles.interpretRange}>
+                {r.emoji ? `${r.emoji} ` : ''}{r.title}
+              </span>
+              <span style={{ color: 'var(--color-text-muted)', fontSize: 12 }}>{r.subtitle ?? ''}</span>
             </div>
           ))}
       </div>

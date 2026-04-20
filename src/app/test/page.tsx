@@ -4,6 +4,7 @@ import {
   ClipboardCheck, Brain, Activity, Moon, Heart, Flame, ChevronRight,
   Sparkles, HeartHandshake, Compass, Layers, Users, Gift, Flower2,
   HeartCrack, Sparkle, Target, Leaf, Palette, Sprout, MessageCircle,
+  UtensilsCrossed, PawPrint, History, Cat, Film, Coffee,
 } from 'lucide-react';
 import styles from './test.module.css';
 
@@ -81,6 +82,27 @@ const RELATIONSHIP: TestCard[] = [
     meta: '10문항 · 약 2분' },
 ];
 
+const VIRAL: TestCard[] = [
+  { href: '/test/animal-face', icon: <PawPrint size={22} />, tone: 'orange',
+    title: '동물상 테스트', desc: '강아지·고양이·토끼·늑대·사슴·햄스터 중 나는?',
+    meta: '6문항 · 약 1분' },
+  { href: '/test/food-type', icon: <UtensilsCrossed size={22} />, tone: 'pink',
+    title: '나를 음식으로 표현하면?', desc: '흰쌌밥·라면·마라·싹이크·치킨·김밥 버전.',
+    meta: '6문항 · 약 2분' },
+  { href: '/test/beverage', icon: <Coffee size={22} />, tone: 'blue',
+    title: '나를 음료로 표현하면?', desc: '아메리카노·라떼·쇉이크·차·탄산·와인 중 내 성격은?',
+    meta: '5문항 · 약 1분' },
+  { href: '/test/drama-character', icon: <Film size={22} />, tone: 'purple',
+    title: '내가 드라마 속 캐릭터라면?', desc: '주인공·서브·미스터리·개그·빌런·힐링 중 나는?',
+    meta: '5문항 · 약 1분' },
+  { href: '/test/past-life', icon: <History size={22} />, tone: 'yellow',
+    title: '전생 직업 테스트', desc: '내가 전생에 관리는 사람이었을까?',
+    meta: '6문항 · 약 2분' },
+  { href: '/test/cat-or-dog', icon: <Cat size={22} />, tone: 'green',
+    title: '강아지 vs 고양이 (성격편)', desc: '나는 댓댓이형일까 냐냐이형일까?',
+    meta: '8문항 · 약 1분' },
+];
+
 const SELF: TestCard[] = [
   { href: '/test/hsp', icon: <Sparkle size={22} />, tone: 'yellow',
     title: '민감도 테스트 (HSP)', desc: '자극과 감정에 얼마나 예민한 사람인지.',
@@ -148,6 +170,7 @@ export default function TestHubPage() {
 
       <Section title="심리 자가진단" subtitle="전문 척도 기반의 자가진단 검사" items={CLINICAL} />
       <Section title="성격·성향" subtitle="나를 이해하는 성격 테스트" items={PERSONALITY} />
+      <Section title="매일 유행 바이럴 테스트" subtitle="MZ들이 지금 많이 하는 재밌는 테스트" items={VIRAL} />
       <Section title="연애·관계" subtitle="관계 속의 나를 알아보기" items={RELATIONSHIP} />
       <Section title="자기이해 & 감성" subtitle="재밌게 나를 들여다보는 테스트" items={SELF} />
     </div>

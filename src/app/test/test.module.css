@@ -599,3 +599,133 @@
     flex-direction: column;
   }
 }
+
+/* ── Result V2 styles ── */
+.heroCard {
+  background: linear-gradient(160deg, #f5f0ff 0%, #fff0f6 50%, #fffaf0 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl, 20px);
+  padding: 32px 22px 28px;
+  text-align: center;
+  margin: 18px 0 22px;
+  box-shadow: var(--shadow-sm, 0 4px 14px rgba(80,70,120,0.07));
+}
+
+.heroEmoji {
+  font-size: 58px;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.heroTagline {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin-bottom: 10px;
+}
+
+.heroTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.heroSubtitle {
+  font-size: 13px;
+  color: var(--color-accent);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.heroDesc {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.traitGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.traitCard {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+}
+
+.traitGood { background: #f1fbf4; border-color: #cfeed9; }
+.traitBad { background: #fff5f2; border-color: #ffd9ca; }
+.traitMatch { background: #fff0f6; border-color: #ffd0e0; }
+.traitAvoid { background: #f5f4ff; border-color: #ddd8ff; }
+
+.traitHead {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.traitList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+}
+.traitList li { position: relative; padding-left: 12px; }
+.traitList li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+}
+
+.traitText {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+}
+
+.tipBox {
+  background: #fffbe8;
+  border: 1px solid #ffe69b;
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.tipHead {
+  font-size: 13px;
+  font-weight: 700;
+  color: #8a6a00;
+  margin-bottom: 6px;
+}
+.tipText {
+  font-size: 13px;
+  color: #6a5500;
+  line-height: 1.65;
+}
+
+.quoteBox {
+  margin: 0 0 18px;
+  padding: 14px 18px;
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-bg-secondary, #fafafa);
+  font-size: 14px;
+  font-style: italic;
+  color: var(--color-text-secondary);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+@media (max-width: 480px) {
+  .traitGrid { grid-template-columns: 1fr; }
+  .heroEmoji { font-size: 48px; }
+  .heroTitle { font-size: 19px; }
+}
