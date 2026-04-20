@@ -4,6 +4,7 @@ import { useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, RotateCcw, ArrowLeft } from 'lucide-react';
 import styles from './test.module.css';
+import ShareButtons from './ShareButtons';
 
 export interface TestOption {
   label: string;
@@ -306,6 +307,12 @@ export default function TestRunner({
 
       <p className={styles.disclaimer}>{DISCLAIMER}</p>
       {extraFooter}
+
+      <ShareButtons
+        title={title}
+        result={`${totalScore}·${interpretation.level}`}
+        tagline={interpretation.tagline ?? subtitle ?? ''}
+      />
 
       <div className={styles.resultActions}>
         <button className={`${styles.resultBtn} ${styles.resultBtnPrimary}`} onClick={handleReset}>

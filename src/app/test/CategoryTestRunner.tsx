@@ -4,6 +4,7 @@ import { useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, RotateCcw, ArrowLeft } from 'lucide-react';
 import styles from './test.module.css';
+import ShareButtons from './ShareButtons';
 
 export interface CategoryOption {
   label: string;
@@ -315,6 +316,12 @@ export default function CategoryTestRunner({
 
       <p className={styles.disclaimer}>{DISCLAIMER}</p>
 
+      <ShareButtons
+        title={title}
+        result={winner.title}
+        tagline={winner.tagline ?? winner.subtitle ?? ''}
+      />
+
       <div className={styles.resultActions}>
         <button className={`${styles.resultBtn} ${styles.resultBtnPrimary}`} onClick={handleReset}>
           <RotateCcw size={16} />
@@ -322,9 +329,11 @@ export default function CategoryTestRunner({
         </button>
         <Link href="/test" className={`${styles.resultBtn} ${styles.resultBtnSecondary}`}>
           <ArrowLeft size={16} />
-          목록으로
+          다른 테스트
         </Link>
       </div>
     </div>
   );
 }
+
+

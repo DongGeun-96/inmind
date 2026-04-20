@@ -36,6 +36,22 @@ const Q: CategoryQuestion[] = [
     { label: '친구한테 연락해서 수다', weights: { dog: 1 } },
     { label: '이불 속에서 잠수', weights: { cat: 1 } },
   ]},
+  { text: '친구와 밥 약속이 있을 때?', options: [
+    { label: '신나서 미리 약속 정함', weights: { dog: 1 } },
+    { label: '좋긴 한데 귀찮을까 봐 망설임', weights: { cat: 1 } },
+  ]},
+  { text: '누가 나를 따뜻하게 안아주면?', options: [
+    { label: '바로 기분 좋아짐', weights: { dog: 1 } },
+    { label: '처음엔 어색, 나중엔 스르르', weights: { cat: 1 } },
+  ]},
+  { text: '내 기분이 별로일 때 누가 다가오면?', options: [
+    { label: '말을 걸어줘서 고마움', weights: { dog: 1 } },
+    { label: '오히려 내비 두기를 바람', weights: { cat: 1 } },
+  ]},
+  { text: '내 물건을 누가 건드리면?', options: [
+    { label: '괜찮아, 쓰고 줘도 돼', weights: { dog: 1 } },
+    { label: '내 것은 내 것. 경계선 명확', weights: { cat: 1 } },
+  ]},
 ];
 
 const R: CategoryResult[] = [

@@ -729,3 +729,42 @@
   .heroEmoji { font-size: 48px; }
   .heroTitle { font-size: 19px; }
 }
+
+/* ── Share ── */
+.shareBox {
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+.shareTitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 10px;
+}
+.shareButtons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.shareBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-secondary, #fafafa);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+.shareBtn:hover {
+  background: var(--color-bg-hover, #f0f0f0);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
