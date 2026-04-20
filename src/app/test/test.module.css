@@ -101,6 +101,26 @@
   .grid { grid-template-columns: 1fr; }
 }
 
+.section {
+  margin-top: 32px;
+}
+
+.sectionHead {
+  margin-bottom: 14px;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.sectionSub {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
 /* ── Test Common (shared by PHQ-9 / GAD-7) ── */
 .testContainer {
   max-width: var(--max-width);
