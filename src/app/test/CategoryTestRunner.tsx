@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ChevronLeft, ChevronRight, RotateCcw, ArrowLeft } from 'lucide-react';
 import styles from './test.module.css';
 import ShareButtons from './ShareButtons';
+import TestToCommunity from './TestToCommunity';
 
 export interface CategoryOption {
   label: string;
@@ -321,6 +322,8 @@ export default function CategoryTestRunner({
         result={winner.title}
         tagline={winner.tagline ?? winner.subtitle ?? ''}
       />
+
+      <TestToCommunity testId={testId} />
 
       <div className={styles.resultActions}>
         <button className={`${styles.resultBtn} ${styles.resultBtnPrimary}`} onClick={handleReset}>

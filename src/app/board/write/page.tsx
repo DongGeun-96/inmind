@@ -162,6 +162,14 @@ function WriteForm() {
       return;
     }
 
+    // 자동 공감/댓글 트리거 (실패해도 무시)
+    fetch('/api/auto-engage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ postId: data.id }),
+      keepalive: true,
+    }).catch(() => {});
+
     router.push(`/post/${data.id}`);
   };
 
