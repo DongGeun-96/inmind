@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase-server';
+import { renderPostContent } from '@/lib/post-content';
 import { BOARD_CONFIG, CATEGORIES, type BoardType } from '@/types/database';
 import PostDetailClient from './PostDetailClient';
 
@@ -138,6 +139,7 @@ export default async function PostPage({ params }: Props) {
     />
     <PostDetailClient
       post={{ ...post, empathy_count: empathyCount || 0 }}
+      contentHtml={renderPostContent(post.content)}
       comments={comments || []}
       config={config}
       currentUserId={user?.id || null}

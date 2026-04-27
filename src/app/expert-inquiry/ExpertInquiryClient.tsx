@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { UserPlus, ArrowLeft, CheckCircle, PenLine, ChevronDown, ChevronUp, Clock } from 'lucide-react';
-import DOMPurify from 'isomorphic-dompurify';
 import { createClient } from '@/lib/supabase-client';
 import { Input } from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
