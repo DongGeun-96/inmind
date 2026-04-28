@@ -8,9 +8,42 @@ export const metadata: Metadata = {
   description: '번아웃 증상 체크리스트와 회복 가이드.',
 };
 
+const FAQS = [
+  {
+    q: '단순한 피로와 번아웃의 차이는 무엇인가요?',
+    a: '단순 피로는 휴식을 취하면 회복되지만, 번아웃은 충분히 쉬어도 회복되지 않고 무기력감과 냉소가 지속됩니다. "쉬고 싶다"가 아니라 "아무것도 하고 싶지 않다"에 가깝다면 번아웃 신호예요.',
+  },
+  {
+    q: '번아웃 회복은 어디서부터 시작해야 하나요?',
+    a: '자신이 번아웃 상태임을 인정하는 것이 첫 단계입니다. 가능한 만큼의 완전한 휴식을 확보하고, 자신의 에너지를 소모시키는 요인을 점검해 보세요.',
+  },
+  {
+    q: '직장에서 일을 줄이는 게 쉽지 않아요. 어떻게 해야 하나요?',
+    a: '한꺼번에 줄이기보다 작은 경계 설정부터 시작해 보세요. 점심시간에 업무 공간 벗어나기, 퇴근 후 업무 메시지 차단하기, 거절 연습하기 같은 방식이 도움이 됩니다.',
+  },
+  {
+    q: '번아웃이 만성이 되면 어떻게 되나요?',
+    a: '수개월 이상 지속되면 우울증으로 이어질 수 있습니다. 번아웃도 치료가 필요한 상태이므로 정신건강의학과 상담을 받아보시는 것을 권합니다.',
+  },
+];
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 export default function BurnoutPage() {
   return (
     <article className={styles.article}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <Link href="/help" className={styles.articleBack}>
         <ArrowLeft size={14} />
         도움말 목록

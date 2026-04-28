@@ -8,9 +8,42 @@ export const metadata: Metadata = {
   description: '사별 후 겪는 감정과 회복 과정을 안내합니다.',
 };
 
+const FAQS = [
+  {
+    q: '사별 후 슬픔이 파도처럼 오는 게 정상인가요?',
+    a: '네, 매우 정상적인 반응입니다. 애도는 직선이 아니에요. 잔잔한 날도 있고 갑자기 무너지는 날도 있는 것이 자연스러운 흐름입니다.',
+  },
+  {
+    q: '어떤 때 전문 도움이 필요한 신호로 봐야 하나요?',
+    a: '6개월 이상 일상 복귀가 안 되거나, 고인을 따라가고 싶은 생각이 들거나, 극심한 자기 방치·물질 의존이 나타날 때입니다. 그런 경우는 정신건강의학과 또는 사별 상담 전문가의 도움을 받으세요.',
+  },
+  {
+    q: '1주기나 기념일이 다가올 때 어떻게 대처하면 좋을까요?',
+    a: '미리 그 날의 계획을 세워두고, 함께 할 사람과 시간을 보내는 것이 도움이 됩니다. 고인을 기리는 자신만의 방식을 만들어도 좋고, 무리하지 않고 쉬어도 괜찮아요.',
+  },
+  {
+    q: '남은 사람들의 자기 돌봄은 어떻게 시작하나요?',
+    a: '규칙적인 식사와 수면을 유지하고, 감정을 글이나 대화로 표현하며, 도움이 필요할 때 주저 없이 요청하세요. 슬픔에도 불구하고 즐거운 순간이 오는 것은 자연스러운 회복의 신호입니다.',
+  },
+];
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 export default function HumanLossPage() {
   return (
     <article className={styles.article}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <Link href="/help" className={styles.articleBack}>
         <ArrowLeft size={14} />
         도움말 목록

@@ -8,9 +8,42 @@ export const metadata: Metadata = {
   description: '공황 발작 대처법, 그라운딩 기법, 예방법 안내.',
 };
 
+const FAQS = [
+  {
+    q: '공황 발작이 오면 당장 어떻게 해야 하나요?',
+    a: '안전한 곳에 앉아 호흡에 집중하세요. 코로 4초 들이쉬고 입으로 6초 천천히 내쉬는 호흡, 그리고 5-4-3-2-1 그라운딩 기법(눈에 보이는 것 5가지, 만질 수 있는 것 4가지…)이 효과적입니다.',
+  },
+  {
+    q: '공황 발작으로 죽을 수도 있나요?',
+    a: '공황 발작으로 사망하는 경우는 없습니다. 보통 10~20분 안에 자연스럽게 가라앉아요. 이 사실을 아는 것만으로도 공포가 줄어들 수 있습니다.',
+  },
+  {
+    q: '공황장애로 봐야 할 신호는 무엇인가요?',
+    a: '한 달 안에 2회 이상 공황 발작이 반복되거나, 발작이 올까 봐 항상 불안하거나, 특정 장소·상황을 피하게 된다면 공황장애일 수 있습니다. 전문의 상담을 권합니다.',
+  },
+  {
+    q: '일상에서 공황을 예방하는 방법은 무엇인가요?',
+    a: '규칙적인 유산소 운동, 카페인·알코올 줄이기, 충분한 수면과 규칙적인 생활 리듬, 평소의 호흡 연습, 명상이나 마음챙김이 도움이 됩니다.',
+  },
+];
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 export default function PanicPage() {
   return (
     <article className={styles.article}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <Link href="/help" className={styles.articleBack}>
         <ArrowLeft size={14} />
         도움말 목록

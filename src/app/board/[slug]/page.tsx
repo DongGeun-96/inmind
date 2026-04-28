@@ -1,5 +1,6 @@
 import { notFound, redirect } from 'next/navigation';
 import { BOARD_CONFIG, CATEGORIES, type BoardType } from '@/types/database';
+import { BOARD_META } from '@/data/board-meta';
 import { createClient } from '@/lib/supabase-server';
 import BoardClient from './BoardClient';
 
@@ -93,15 +94,36 @@ export default async function BoardPage({ params, searchParams }: Props) {
     ],
   };
 
+  const meta = BOARD_META[boardType] ?? null;
+  const showFaqLd = !isAllView && currentPage === 1 && meta && meta.faqs.length > 0;
+  const faqLd = showFaqLd
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: meta!.faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      }
+    : null;
+
   return (
     <>
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
     />
+    {faqLd && (
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
+    )}
     <BoardClient
       boardType={boardType}
       config={config}
+      meta={meta}
       notices={notices}
       posts={posts || []}
       currentPage={currentPage}

@@ -8,9 +8,46 @@ export const metadata: Metadata = {
   description: '우울감이 2주 이상 지속될 때 참고할 수 있는 단계별 안내입니다.',
 };
 
+const FAQS = [
+  {
+    q: '우울할 때 오늘 당장 할 수 있는 일은 무엇인가요?',
+    a: '같은 시간에 일어나기, 5분이라도 바깥 공기 쐬기, 물 한 잔 마시기 같은 작은 자기 돌봄부터 시작하세요. 거창하지 않아도 됩니다.',
+  },
+  {
+    q: '정신과에 가면 진료 기록이 남나요?',
+    a: '정신건강의학과 진료 기록은 의료법에 의해 철저히 보호됩니다. 일반적인 취업이나 보험 가입에 영향을 주지 않습니다.',
+  },
+  {
+    q: '약을 먹으면 중독되나요?',
+    a: '정신과 약물은 전문의의 처방 아래 안전하게 사용됩니다. 필요에 따라 조절하며, 중독성이 거의 없는 약물을 주로 사용합니다.',
+  },
+  {
+    q: '약물 처방 없이 상담만 받을 수도 있나요?',
+    a: '네, 약물 처방 없이 심리상담만 받을 수 있습니다. 상담사와 함께 마음을 정리하는 것도 큰 도움이 됩니다.',
+  },
+  {
+    q: '어디서 상담받을 수 있나요?',
+    a: '정신건강의학과(전문의 진료, 필요시 약물 처방), 정신건강복지센터(1577-0199, 무료 상담), 한국생명의전화(1588-9191) 등을 이용할 수 있습니다.',
+  },
+];
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 export default function DepressionFirstStepsPage() {
   return (
     <article className={styles.article}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <Link href="/help" className={styles.articleBack}>
         <ArrowLeft size={14} />
         도움말 목록
