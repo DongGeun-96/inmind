@@ -8,9 +8,46 @@ export const metadata: Metadata = {
   description: '펫로스 증후군을 겪고 있는 분들을 위한 안내입니다.',
 };
 
+const FAQS = [
+  {
+    q: '펫로스 증후군이 정상인 반응인가요?',
+    a: '네, 사람을 잃었을 때와 비슷한 애도 과정을 거치는 분이 많습니다. 공허함, 그리움, 죄책감은 모두 사랑했다는 증거예요.',
+  },
+  {
+    q: '펫로스 증후군은 어떤 단계로 진행되나요?',
+    a: '대개 부정 → 분노/자책 → 우울 → 수용 순으로 진행되며, 본인의 속도로 천천히 거쳐갑니다. 단계가 명확히 구분되지 않거나 반복되기도 해요.',
+  },
+  {
+    q: '새 반려동물을 빨리 맞이해도 될까요?',
+    a: '서두를 필요 없어요. 떠난 아이를 잊는 일이 아니지만, 본인 마음이 충분히 준비됐을 때 결정하셔도 늦지 않습니다.',
+  },
+  {
+    q: '주변에서 슬픔을 이해해 주지 않을 때 어떻게 하나요?',
+    a: '같은 경험을 한 사람들과 이야기하는 것이 큰 위로가 됩니다. 펫로스를 겪은 사람들이 모인 커뮤니티나 온라인 모임을 활용해 보세요.',
+  },
+  {
+    q: '어떤 때 전문가의 도움이 필요한가요?',
+    a: '2주 이상 일상생활이 어려울 정도로 슬픔이 지속되거나 자해에 대한 생각이 든다면 정신건강의학과 또는 상담 전문가의 도움을 받아주세요.',
+  },
+];
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 export default function PetLossPage() {
   return (
     <article className={styles.article}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <Link href="/help" className={styles.articleBack}>
         <ArrowLeft size={14} />
         도움말 목록

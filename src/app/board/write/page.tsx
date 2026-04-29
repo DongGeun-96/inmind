@@ -162,6 +162,15 @@ function WriteForm() {
       return;
     }
 
+    // IndexNow: 빙/네이버 색인 요청 (공개 게시글만, 실패해도 무시)
+    if (!isAnonymous) {
+      fetch('/api/indexnow', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ urls: [`https://in-mind.dev/post/${data.id}`] }),
+      }).catch(() => {});
+    }
+
     // 자동 공감/댓글 트리거 (실패해도 무시)
     fetch('/api/auto-engage', {
       method: 'POST',

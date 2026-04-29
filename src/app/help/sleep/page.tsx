@@ -8,9 +8,42 @@ export const metadata: Metadata = {
   description: '불면증 대처법과 수면 위생 가이드. 잠 못 자는 밤을 위한 안내.',
 };
 
+const FAQS = [
+  {
+    q: '수면 위생의 핵심은 무엇인가요?',
+    a: '매일 같은 시간에 자고 일어나기, 침실을 어둡고 시원하게 유지하기, 잠자리에 들기 1시간 전부터 스마트폰 멀리하기, 카페인을 오후 2시 이후로 피하기가 기본입니다.',
+  },
+  {
+    q: '잠이 안 올 때 당장 해볼 수 있는 방법은 무엇인가요?',
+    a: '4-7-8 호흡법(코로 4초 들이쉬고 7초 참고 입으로 8초 내쉬기)을 3~4회 반복해 보세요. 점진적 근육 이완이나 마음 속 안전한 장소를 떠올리는 심상화도 효과적입니다.',
+  },
+  {
+    q: '불면증과 우울·불안의 관계는 어떤가요?',
+    a: '불면이 오래 지속되면 우울이나 불안이 동반되기 쉽고, 반대로 우울이나 불안이 불면의 원인이 되기도 합니다. 수면 문제가 2주 이상 지속된다면 단순한 수면 문제가 아닐 수 있어요.',
+  },
+  {
+    q: '언제 병원에 가는 것이 좋을까요?',
+    a: '잠들기까지 30분 이상 걸리는 날이 일주일에 3일 이상이거나, 한 달 이상 수면 문제가 지속되거나, 낮 동안 피로감이 심해 일상생활에 지장이 있다면 수면 전문의 또는 정신건강의학과 진료를 받아보세요.',
+  },
+];
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+};
+
 export default function SleepPage() {
   return (
     <article className={styles.article}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
+      />
       <Link href="/help" className={styles.articleBack}>
         <ArrowLeft size={14} />
         도움말 목록
