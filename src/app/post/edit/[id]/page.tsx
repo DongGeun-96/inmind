@@ -8,7 +8,7 @@ import { createClient } from '@/lib/supabase-client';
 import { BOARD_CONFIG, type BoardType } from '@/types/database';
 import { Input } from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
-import { slugify } from '@/lib/post-url';
+import { postUrl } from '@/lib/post-url';
 import styles from './edit.module.css';
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -101,7 +101,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
       .eq('id', id);
 
     if (error) { alert('수정에 실패했어요.'); setLoading(false); return; }
-    router.push(`/post/${slugify(title.trim())}/${id}`);
+    router.push(postUrl({ id, title: title.trim() }));
   };
 
   if (initialLoading) {

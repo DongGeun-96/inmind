@@ -19,7 +19,9 @@ interface PostLike {
 }
 
 export function postUrl(post: PostLike): string {
-  return `/post/${slugify(post.title)}/${post.id}`;
+  // 한글/대소문자 포함 슬러그 → HTTP Location 헤더 안전을 위해 퍼센트 인코딩
+  // (브라우저 주소창에서는 한글로 다시 디코딩되어 보여서 SEO/가독성 유지)
+  return `/post/${encodeURIComponent(slugify(post.title))}/${post.id}`;
 }
 
 export function postAbsoluteUrl(post: PostLike, base = 'https://in-mind.dev'): string {
