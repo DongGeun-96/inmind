@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: Props) {
   const supabase = await createClient();
   const { data: post } = await supabase
     .from('posts')
-    .select('title, content, board_type, is_public')
+    .select('title, content, board_type, is_public, is_anonymous, created_at, updated_at, user:users(nickname)')
     .eq('id', id)
     .single();
 
@@ -22,24 +22,55 @@ export async function generateMetadata({ params }: Props) {
     return { title: '인마인드' };
   }
 
-  const description = post.content.replace(/<[^>]*>/g, '').slice(0, 160);
+  const plainText = post.content.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+  const description = plainText.slice(0, 160);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
   const canonicalPath = postUrl({ id, title: post.title });
+  const config = BOARD_CONFIG[post.board_type as BoardType];
+  const authorName = post.is_anonymous ? '익명' : (post.user as any)?.nickname || '알 수 없음';
+
+  // 네이버/구글 키워드 추출 (제목 + 게시판 라벨 + 고정 브랜드)
+  const titleKeywords = post.title.split(/\s+/).filter((w: string) => w.length >= 2).slice(0, 5);
+  const keywords = [
+    ...titleKeywords,
+    config?.label,
+    config?.category,
+    '인마인드',
+    '힌링 커뮤니티',
+    '공감과 위로',
+  ].filter(Boolean) as string[];
 
   return {
     title: post.title,
     description,
+    keywords,
+    authors: [{ name: authorName }],
     alternates: { canonical: `${siteUrl}${canonicalPath}` },
     openGraph: {
       type: 'article',
       title: post.title,
       description,
       url: `${siteUrl}${canonicalPath}`,
+      locale: 'ko_KR',
+      siteName: '인마인드',
+      publishedTime: post.created_at,
+      modifiedTime: post.updated_at,
+      authors: [authorName],
+      section: config?.label,
+      tags: [config?.label, config?.category, '인마인드'].filter(Boolean) as string[],
     },
     twitter: {
       card: 'summary',
       title: post.title,
       description,
+    },
+    other: {
+      // 네이버/일부 도구가 읽는 레거시 키워드 태그
+      news_keywords: keywords.slice(0, 10).join(', '),
+      'article:author': authorName,
+      'article:section': config?.label || '',
+      'article:published_time': post.created_at,
+      'article:modified_time': post.updated_at,
     },
   };
 }
