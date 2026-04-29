@@ -9,6 +9,7 @@ import { toKoreanError } from '@/lib/error-messages';
 import { timeAgo } from '@/lib/format';
 import PostItem from '@/components/PostItem';
 import Button from '@/components/ui/Button';
+import { postUrl } from '@/lib/post-url';
 import type { Post, User } from '@/types/database';
 import { BOARD_CONFIG, type BoardType } from '@/types/database';
 import styles from './mypage.module.css';
@@ -262,7 +263,7 @@ export default function MypageClient({ profile, myPosts, myComments, myEmpathies
                 {myComments.map((comment) => (
                   <li key={comment.id} className={styles.commentItem}>
                     {comment.post && (
-                      <Link href={`/post/${comment.post.id}`} className={styles.commentPostTitle}>
+                      <Link href={postUrl(comment.post)} className={styles.commentPostTitle}>
                         {BOARD_CONFIG[comment.post.board_type as BoardType]?.label} &gt; {comment.post.title}
                       </Link>
                     )}

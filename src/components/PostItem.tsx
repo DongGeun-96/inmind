@@ -3,6 +3,7 @@ import { MessageCircle, ThumbsUp, Eye } from 'lucide-react';
 import { timeAgo, stripHtmlToText } from '@/lib/format';
 import { getCategoryColor } from '@/lib/categoryColors';
 import { BOARD_CONFIG, type BoardType, type Post } from '@/types/database';
+import { postUrl } from '@/lib/post-url';
 import styles from './PostItem.module.css';
 
 interface PostItemProps {
@@ -44,7 +45,7 @@ export default function PostItem({
   if (variant === 'card') {
     // 레거시 카드 variant 유지(현재 미사용)
     return (
-      <Link href={`/post/${post.id}`} className={styles.card}>
+      <Link href={postUrl(post)} className={styles.card}>
         {boardConfig && (
           <span
             className={styles.chip}
@@ -63,7 +64,7 @@ export default function PostItem({
     <div className={`${styles.item} ${compact ? styles.compact : ''}`}>
       <div className={styles.content}>
         <h3 className={styles.title}>
-          <Link href={`/post/${post.id}`} className={styles.titleLink}>
+          <Link href={postUrl(post)} className={styles.titleLink}>
             {post.title}
           </Link>
           {commentCount > 0 && <span className={styles.commentCount}>[{commentCount}]</span>}
@@ -71,7 +72,7 @@ export default function PostItem({
 
         {preview && (
           <p className={styles.preview}>
-            <Link href={`/post/${post.id}`} className={styles.previewLink}>
+            <Link href={postUrl(post)} className={styles.previewLink}>
               {preview}
             </Link>
           </p>
@@ -102,7 +103,7 @@ export default function PostItem({
         </div>
       </div>
       {thumbnail && (
-        <Link href={`/post/${post.id}`} className={styles.thumbnail}>
+        <Link href={postUrl(post)} className={styles.thumbnail}>
           <img src={thumbnail} alt="" />
         </Link>
       )}

@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { createClient } from '@/lib/supabase-server';
 import { BOARD_CONFIG, type BoardType } from '@/types/database';
+import { postUrl } from '@/lib/post-url';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
@@ -58,13 +59,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 공개 게시글 (최근 500개)
   const { data: posts } = await supabase
     .from('posts')
-    .select('id, updated_at')
+    .select('id, title, updated_at')
     .eq('is_public', true)
     .order('created_at', { ascending: false })
     .limit(500);
 
   const postPages: MetadataRoute.Sitemap = (posts || []).map((post) => ({
-    url: `${siteUrl}/post/${post.id}`,
+    url: `${siteUrl}${postUrl(post)}`,
     lastModified: new Date(post.updated_at),
     changeFrequency: 'weekly' as const,
     priority: 0.6,

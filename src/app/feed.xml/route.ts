@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase-server';
 import { BOARD_CONFIG, type BoardType } from '@/types/database';
+import { postUrl } from '@/lib/post-url';
 
 export async function GET() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
@@ -18,11 +19,11 @@ export async function GET() {
     return `
     <item>
       <title><![CDATA[${post.title}]]></title>
-      <link>${siteUrl}/post/${post.id}</link>
+      <link>${siteUrl}${postUrl(post)}</link>
       <description><![CDATA[${description}]]></description>
       <category>${config?.label || post.board_type}</category>
       <pubDate>${new Date(post.created_at).toUTCString()}</pubDate>
-      <guid>${siteUrl}/post/${post.id}</guid>
+      <guid>${siteUrl}${postUrl(post)}</guid>
     </item>`;
   }).join('');
 

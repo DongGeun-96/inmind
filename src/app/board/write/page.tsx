@@ -10,6 +10,7 @@ import { BOARD_CONFIG, CATEGORIES, type BoardType } from '@/types/database';
 import { Input } from '@/components/ui/Input';
 import Button from '@/components/ui/Button';
 import Checkbox from '@/components/ui/Checkbox';
+import { postUrl } from '@/lib/post-url';
 import styles from './write.module.css';
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -167,7 +168,7 @@ function WriteForm() {
       fetch('/api/indexnow', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ urls: [`https://in-mind.dev/post/${data.id}`] }),
+        body: JSON.stringify({ urls: [`https://in-mind.dev${postUrl({ id: data.id, title: title.trim() })}`] }),
       }).catch(() => {});
     }
 
@@ -179,7 +180,7 @@ function WriteForm() {
       keepalive: true,
     }).catch(() => {});
 
-    router.push(`/post/${data.id}`);
+    router.push(postUrl({ id: data.id, title: title.trim() }));
   };
 
   if (!config) {

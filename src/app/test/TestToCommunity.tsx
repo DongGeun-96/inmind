@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { MessageCircle, Sparkles } from 'lucide-react';
 import { createClient } from '@/lib/supabase-client';
+import { postUrl } from '@/lib/post-url';
 import styles from './testToCommunity.module.css';
 
 // 각 테스트 결과 → 추천 게시판
@@ -76,7 +77,7 @@ export default function TestToCommunity({ testId }: { testId: string }) {
           const plain = p.content.replace(/<[^>]*>/g, '').slice(0, 60);
           return (
             <li key={p.id}>
-              <Link href={`/post/${p.id}`} className={styles.item}>
+              <Link href={postUrl(p)} className={styles.item}>
                 <span className={styles.itemTitle}>{p.title}</span>
                 <span className={styles.itemDesc}>{plain}</span>
               </Link>

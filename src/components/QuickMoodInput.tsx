@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Send, Sparkles } from 'lucide-react';
 import { createClient } from '@/lib/supabase-client';
+import { postUrl } from '@/lib/post-url';
 import styles from './QuickMoodInput.module.css';
 
 const MOODS = [
@@ -58,7 +59,7 @@ export default function QuickMoodInput() {
       const { id } = await res.json();
       setText('');
       setMood(null);
-      router.push(`/post/${id}`);
+      router.push(postUrl({ id, title }));
     } else {
       const err = await res.json().catch(() => ({}));
       setMsg(err?.error ?? '등록 실패했어요. 다시 시도해주세요.');
