@@ -1,8 +1,8 @@
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { createClient } from '@/lib/supabase-server';
 import { renderPostContent } from '@/lib/post-content';
 import { BOARD_CONFIG, CATEGORIES, type BoardType } from '@/types/database';
-import { slugify, postUrl } from '@/lib/post-url';
+import { postUrl } from '@/lib/post-url';
 import PostDetailClient from './PostDetailClient';
 
 interface Props {
@@ -58,11 +58,9 @@ export default async function PostPage({ params }: Props) {
 
   if (!post) notFound();
 
-  // 잘못된 slug로 들어오면 정확한 slug URL로 301 리다이렉트 (canonical 일관성)
-  const correctSlug = slugify(post.title);
-  if (slug !== correctSlug) {
-    redirect(postUrl({ id, title: post.title }));
-  }
+  // slug는 장식용. 불일치해도 200으로 제공하고 canonical URL만 일관되게
+  // (slugify 디코딩 충돌 및 리다이렉트 루프 방지)
+  void slug;
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
   const config = BOARD_CONFIG[post.board_type as BoardType];
