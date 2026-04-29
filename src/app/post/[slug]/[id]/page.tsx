@@ -108,6 +108,27 @@ export default async function PostPage({ params }: Props) {
     .order('created_at', { ascending: false })
     .limit(5);
 
+  // 계산된 메타 값들
+  const canonicalUrl = `${siteUrl}${postUrl({ id, title: post.title })}`;
+  const plainText = post.content.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+  const description = plainText.slice(0, 200);
+  const wordCount = plainText.length;
+
+  // 본문 내 첫 이미지 추출 (없으면 기본 OG 이미지)
+  const firstImageMatch = post.content.match(/<img[^>]+src=["']([^"']+)["']/);
+  const articleImage = firstImageMatch?.[1] || `${siteUrl}/opengraph-image`;
+
+  // 댓글을 Comment 스키마로 매핑 (상위 5개만)
+  const commentSchema = (comments || []).slice(0, 5).map((c: any) => ({
+    '@type': 'Comment',
+    text: (c.content || '').replace(/<[^>]*>/g, '').slice(0, 500),
+    dateCreated: c.created_at,
+    author: {
+      '@type': 'Person',
+      name: c.is_anonymous ? '익명' : c.user?.nickname || '알 수 없음',
+    },
+  }));
+
   const breadcrumbLd = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -115,16 +136,33 @@ export default async function PostPage({ params }: Props) {
       { '@type': 'ListItem', position: 1, name: '홈', item: siteUrl },
       { '@type': 'ListItem', position: 2, name: config.category, item: `${siteUrl}/board/${post.board_type}` },
       { '@type': 'ListItem', position: 3, name: config.label, item: `${siteUrl}/board/${post.board_type}` },
-      { '@type': 'ListItem', position: 4, name: post.title },
+      { '@type': 'ListItem', position: 4, name: post.title, item: canonicalUrl },
     ],
   };
 
+  // DiscussionForumPosting (구글 커뮤니티/포럼 전용 스키마) + Article 호환 필드
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'DiscussionForumPosting',
+    '@id': canonicalUrl,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
     headline: post.title,
+    name: post.title,
+    description,
+    articleBody: plainText.slice(0, 5000),
+    text: plainText.slice(0, 5000),
+    wordCount,
+    inLanguage: 'ko',
     datePublished: post.created_at,
     dateModified: post.updated_at,
+    url: canonicalUrl,
+    image: articleImage,
+    keywords: [config.label, config.category, '인마인드', '힌링', '공감'].filter(Boolean).join(', '),
+    isPartOf: {
+      '@type': 'WebSite',
+      name: '인마인드',
+      url: siteUrl,
+    },
     author: {
       '@type': 'Person',
       name: post.is_anonymous ? '익명' : post.user?.nickname || '알 수 없음',
@@ -132,8 +170,31 @@ export default async function PostPage({ params }: Props) {
     publisher: {
       '@type': 'Organization',
       name: '인마인드',
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/logo.svg`,
+      },
     },
-    url: `${siteUrl}${postUrl({ id, title: post.title })}`,
+    interactionStatistic: [
+      {
+        '@type': 'InteractionCounter',
+        interactionType: 'https://schema.org/LikeAction',
+        userInteractionCount: empathyCount || 0,
+      },
+      {
+        '@type': 'InteractionCounter',
+        interactionType: 'https://schema.org/CommentAction',
+        userInteractionCount: (comments || []).length,
+      },
+      {
+        '@type': 'InteractionCounter',
+        interactionType: 'https://schema.org/ViewAction',
+        userInteractionCount: post.view_count || 0,
+      },
+    ],
+    commentCount: (comments || []).length,
+    ...(commentSchema.length > 0 ? { comment: commentSchema } : {}),
   };
 
   return (

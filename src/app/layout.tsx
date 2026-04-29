@@ -63,13 +63,35 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
+const websiteLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': `${SITE_URL}#website`,
   name: SITE_NAME,
   url: SITE_URL,
   description: SITE_DESCRIPTION,
   inLanguage: 'ko',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${SITE_URL}/search?q={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
+};
+
+const organizationLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${SITE_URL}#organization`,
+  name: SITE_NAME,
+  url: SITE_URL,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${SITE_URL}/logo.svg`,
+  },
+  description: SITE_DESCRIPTION,
 };
 
 export default function RootLayout({
@@ -82,7 +104,11 @@ export default function RootLayout({
       <body suppressHydrationWarning>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }}
         />
         <TopBar />
         <Navbar />
