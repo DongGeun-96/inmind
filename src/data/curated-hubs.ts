@@ -9,11 +9,9 @@ export interface CuratedResource {
   url: string;
   summary: string;
   tags: string[];
-  /**
-   * 카드 상단에 쓰는 안전한 내부 비주얼입니다.
-   * 외부 뉴스/유튜브 썸네일을 무단 수집하지 않고도 글-only 느낌을 줄이기 위한 값입니다.
-   */
-  visual?: string;
+  /** 카드 상단에 쓰는 안전한 사진 썸네일입니다. */
+  imageUrl?: string;
+  imageAlt?: string;
 }
 
 export interface CuratedHub {
