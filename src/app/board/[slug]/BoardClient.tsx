@@ -49,31 +49,30 @@ function resourceTypeLabel(type: CuratedResource['type']) {
 function resourceImage(resource: CuratedResource) {
   if (resource.imageUrl) return resource.imageUrl;
 
-  const photo = (id: string) =>
-    `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=80`;
+  const photo = (name: string) => `/curated-thumbnails/${name}.jpg`;
 
-  if (resource.tags.includes('수면')) return photo('photo-1541781774459-bb2af2f05b55');
-  if (resource.tags.includes('카페인')) return photo('photo-1495474472287-4d71bcdd2085');
+  if (resource.tags.includes('수면')) return photo('sleep');
+  if (resource.tags.includes('카페인')) return photo('coffee');
   if (resource.tags.includes('장건강') || resource.tags.includes('식습관') || resource.tags.includes('영양')) {
-    return photo('photo-1490645935967-10de6ba17061');
+    return photo('food');
   }
   if (resource.tags.includes('책추천') || resource.tags.includes('독서') || resource.tags.includes('에세이')) {
-    return photo('photo-1512820790803-83ca734da794e');
+    return photo('books');
   }
-  if (resource.tags.includes('영화') || resource.tags.includes('드라마')) return photo('photo-1489599849927-2ee91cede3ba');
-  if (resource.tags.includes('산책') || resource.tags.includes('숲')) return photo('photo-1441974231531-c6227db76b6e');
-  if (resource.tags.includes('문구') || resource.tags.includes('낭독')) return photo('photo-1455390582262-044cdead277a');
-  if (resource.tags.includes('음악')) return photo('photo-1511671782779-c97d3d27a1d4');
+  if (resource.tags.includes('영화') || resource.tags.includes('드라마')) return photo('movie');
+  if (resource.tags.includes('산책') || resource.tags.includes('숲') || resource.tags.includes('여행')) return photo('place');
+  if (resource.tags.includes('문구') || resource.tags.includes('낭독')) return photo('quote');
+  if (resource.tags.includes('음악')) return photo('selfcare');
 
   switch (resource.type) {
     case 'official':
-      return photo('photo-1486406146926-c627a92ad1ab');
+      return photo('selfcare');
     case 'news':
-      return photo('photo-1504711434969-e33886168f5c');
+      return photo('food');
     case 'youtube':
-      return photo('photo-1492691527719-9d1e07e534b4');
+      return photo('movie');
     default:
-      return photo('photo-1515378791036-0648a3ef77b2');
+      return photo('selfcare');
   }
 }
 
