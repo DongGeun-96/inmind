@@ -1,6 +1,7 @@
 import { notFound, redirect } from 'next/navigation';
 import { BOARD_CONFIG, CATEGORIES, type BoardType } from '@/types/database';
 import { BOARD_META } from '@/data/board-meta';
+import { CURATED_HUBS, isCuratedHubBoard } from '@/data/curated-hubs';
 import { createClient } from '@/lib/supabase-server';
 import BoardClient from './BoardClient';
 
@@ -13,12 +14,17 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params;
   const config = BOARD_CONFIG[slug as BoardType];
   if (!config) return {};
+
+  const hub = CURATED_HUBS[slug as BoardType];
+  const title = hub?.title ?? config.label;
+  const description = hub?.description ?? config.description;
+
   return {
-    title: config.label,
-    description: config.description,
+    title,
+    description,
     openGraph: {
-      title: config.label,
-      description: config.description,
+      title,
+      description,
     },
   };
 }
@@ -47,7 +53,8 @@ export default async function BoardPage({ params, searchParams }: Props) {
     redirect('/auth/login');
   }
 
-  const isAllView = view === 'all';
+  const isCuratedHub = isCuratedHubBoard(boardType);
+  const isAllView = view === 'all' && !isCuratedHub;
   const category = CATEGORIES.find((cat) => cat.boards.includes(boardType));
   const categoryBoards = category?.boards || [boardType];
 
@@ -95,7 +102,8 @@ export default async function BoardPage({ params, searchParams }: Props) {
   };
 
   const meta = BOARD_META[boardType] ?? null;
-  const showFaqLd = !isAllView && currentPage === 1 && meta && meta.faqs.length > 0;
+  const hub = CURATED_HUBS[boardType] ?? null;
+  const showFaqLd = !isAllView && !hub && currentPage === 1 && meta && meta.faqs.length > 0;
   const faqLd = showFaqLd
     ? {
         '@context': 'https://schema.org',
@@ -124,6 +132,7 @@ export default async function BoardPage({ params, searchParams }: Props) {
       boardType={boardType}
       config={config}
       meta={meta}
+      hub={hub}
       notices={notices}
       posts={posts || []}
       currentPage={currentPage}

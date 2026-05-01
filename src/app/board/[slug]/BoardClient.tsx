@@ -2,19 +2,21 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { PenLine, UserPlus, ChevronDown } from 'lucide-react';
+import { PenLine, UserPlus, ChevronDown, ExternalLink } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import Pagination from '@/components/ui/Pagination';
 import PostItem from '@/components/PostItem';
 import Sidebar from '@/components/Sidebar';
 import { BOARD_CONFIG, CATEGORIES, type BoardType, type Post } from '@/types/database';
 import type { BoardMeta } from '@/data/board-meta';
+import type { CuratedHub, CuratedResource } from '@/data/curated-hubs';
 import styles from './board.module.css';
 
 interface Props {
   boardType: BoardType;
   config: { label: string; category: string; description: string; adminOnly?: boolean };
   meta: BoardMeta | null;
+  hub: CuratedHub | null;
   notices: Post[];
   posts: Post[];
   currentPage: number;
@@ -24,7 +26,63 @@ interface Props {
   isAllView?: boolean;
 }
 
-export default function BoardClient({ boardType, config, meta, notices, posts, currentPage, totalPages, isLoggedIn, isAdmin = false, isAllView = false }: Props) {
+function isExternalUrl(url: string) {
+  return url.startsWith('http://') || url.startsWith('https://');
+}
+
+function resourceTypeLabel(type: CuratedResource['type']) {
+  switch (type) {
+    case 'official':
+      return '공식자료';
+    case 'news':
+      return '뉴스';
+    case 'youtube':
+      return '유튜브';
+    default:
+      return '가이드';
+  }
+}
+
+function ResourceCard({ resource, featured = false }: { resource: CuratedResource; featured?: boolean }) {
+  const content = (
+    <>
+      <div className={styles.resourceTopline}>
+        <span className={`${styles.resourceBadge} ${styles[`resourceBadge_${resource.type}`]}`}>
+          {resourceTypeLabel(resource.type)}
+        </span>
+        <span className={styles.resourceSource}>{resource.source}</span>
+      </div>
+      <h3 className={featured ? styles.highlightTitle : styles.resourceTitle}>{resource.title}</h3>
+      <p className={styles.resourceSummary}>{resource.summary}</p>
+      <div className={styles.resourceTags}>
+        {resource.tags.map((tag) => (
+          <span key={tag}>#{tag}</span>
+        ))}
+      </div>
+      {isExternalUrl(resource.url) && (
+        <span className={styles.externalHint}>
+          원문/검색 보기 <ExternalLink size={13} />
+        </span>
+      )}
+    </>
+  );
+
+  if (isExternalUrl(resource.url)) {
+    return (
+      <a href={resource.url} target="_blank" rel="noopener noreferrer" className={featured ? styles.highlightCard : styles.resourceCard}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={resource.url} className={featured ? styles.highlightCard : styles.resourceCard}>
+      {content}
+    </Link>
+  );
+}
+
+export default function BoardClient({ boardType, config, meta, hub, notices, posts, currentPage, totalPages, isLoggedIn, isAdmin = false, isAllView = false }: Props) {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   // 현재 게시판이 속한 카테고리의 게시판들 찾기
   const category = CATEGORIES.find((cat) => cat.boards.includes(boardType));
@@ -34,7 +92,7 @@ export default function BoardClient({ boardType, config, meta, notices, posts, c
     <div className={styles.layout}>
       <div className={styles.main}>
         <div className={styles.header}>
-          <h1 className={styles.title}>{category?.name || config.label}</h1>
+          <h1 className={hub ? styles.srOnly : styles.title}>{hub ? hub.title : category?.name || config.label}</h1>
           {boardType === 'professional' && (
             <Link href="/expert-inquiry">
               <Button size="sm" variant="secondary">
@@ -44,7 +102,7 @@ export default function BoardClient({ boardType, config, meta, notices, posts, c
           )}
         </div>
 
-        {siblingBoards.length > 1 && (
+        {siblingBoards.length > 1 && !hub && (
           <div className={styles.tabs}>
             <Link
               href={`/board/${siblingBoards[0]}?view=all`}
@@ -64,7 +122,89 @@ export default function BoardClient({ boardType, config, meta, notices, posts, c
           </div>
         )}
 
-        {!isAllView && meta && currentPage === 1 && (
+        {hub && currentPage === 1 && (
+          <>
+            <section className={styles.hubHero} aria-labelledby="curated-hub-title">
+              <div className={styles.hubEyebrow}>{hub.eyebrow}</div>
+              <h2 id="curated-hub-title" className={styles.hubTitle}>{hub.title}</h2>
+              <p className={styles.hubDescription}>{hub.description}</p>
+              <div className={styles.hubFilters} aria-label="콘텐츠 필터">
+                {hub.filters.map((filter) => (
+                  <span key={filter} className={styles.hubFilter}>{filter}</span>
+                ))}
+              </div>
+            </section>
+
+            <section className={styles.hubSection} aria-labelledby="hub-highlights-heading">
+              <div className={styles.sectionHeader}>
+                <span className={styles.sectionEyebrow}>추천 큐레이션</span>
+                <h2 id="hub-highlights-heading" className={styles.sectionTitle}>먼저 보면 좋은 자료</h2>
+              </div>
+              <div className={styles.highlightGrid}>
+                {hub.highlights.map((resource) => (
+                  <ResourceCard key={`${resource.type}-${resource.title}`} resource={resource} featured />
+                ))}
+              </div>
+            </section>
+
+            <section className={styles.hubSection} aria-labelledby="hub-resources-heading">
+              <div className={styles.sectionHeader}>
+                <span className={styles.sectionEyebrow}>외부 자료</span>
+                <h2 id="hub-resources-heading" className={styles.sectionTitle}>뉴스·영상·공식 자료</h2>
+                <p className={styles.sectionDescription}>본문 복제 없이 출처와 탐색 링크 중심으로 연결합니다.</p>
+              </div>
+              <div className={styles.resourceGrid}>
+                {hub.resources.map((resource) => (
+                  <ResourceCard key={`${resource.type}-${resource.title}`} resource={resource} />
+                ))}
+              </div>
+            </section>
+
+            <section className={styles.guideBox} aria-labelledby="hub-guide-heading">
+              <div>
+                <span className={styles.sectionEyebrow}>인마인드 요약</span>
+                <h2 id="hub-guide-heading" className={styles.sectionTitle}>{hub.guideTitle}</h2>
+              </div>
+              <div className={styles.guideText}>
+                {hub.guideParagraphs.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+              <div className={styles.quickTips}>
+                {hub.quickTips.map((tip) => (
+                  <span key={tip}>{tip}</span>
+                ))}
+              </div>
+              <p className={styles.disclaimer}>{hub.disclaimer}</p>
+            </section>
+
+            <section className={styles.relatedHubBox} aria-labelledby="related-hubs-heading">
+              <div>
+                <span className={styles.sectionEyebrow}>연결해서 보기</span>
+                <h2 id="related-hubs-heading" className={styles.sectionTitle}>관련 허브와 키워드</h2>
+              </div>
+              <div className={styles.relatedHubLinks}>
+                {hub.relatedBoards.map((relatedBoard) => (
+                  <Link key={relatedBoard} href={`/board/${relatedBoard}`} className={styles.relatedHubLink}>
+                    {BOARD_CONFIG[relatedBoard].label}
+                  </Link>
+                ))}
+              </div>
+              <div className={styles.keywordList}>
+                {hub.keywords.map((keyword) => (
+                  <span key={keyword}>#{keyword}</span>
+                ))}
+              </div>
+            </section>
+
+            <div className={styles.communityHeader}>
+              <span className={styles.sectionEyebrow}>커뮤니티</span>
+              <h2 className={styles.sectionTitle}>인마인드에서 나눈 {config.label} 이야기</h2>
+            </div>
+          </>
+        )}
+
+        {!isAllView && !hub && meta && currentPage === 1 && (
           <p className={styles.intro}>{meta.intro}</p>
         )}
 
@@ -112,7 +252,7 @@ export default function BoardClient({ boardType, config, meta, notices, posts, c
 
         <Pagination currentPage={currentPage} totalPages={totalPages} baseUrl={`/board/${boardType}`} />
 
-        {!isAllView && meta && currentPage === 1 && (
+        {!isAllView && !hub && meta && currentPage === 1 && (
           <>
             {meta.faqs.length > 0 && (
               <section className={styles.faqSection} aria-labelledby="board-faq-heading">
