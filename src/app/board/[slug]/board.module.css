@@ -361,19 +361,27 @@
 }
 
 .resourceVisual {
+  position: relative;
   min-height: 132px;
   border-radius: 14px;
   background-color: #f4ecff;
-  background-position: center;
-  background-size: cover;
   overflow: hidden;
 }
 
-.resourceVisual_official,
-.resourceVisual_news,
-.resourceVisual_youtube,
-.resourceVisual_guide {
-  background-blend-mode: normal;
+.resourceVisual::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(14, 10, 30, 0.02), rgba(14, 10, 30, 0.18));
+  pointer-events: none;
+}
+
+.resourceVisual img {
+  display: block;
+  width: 100%;
+  height: 132px;
+  object-fit: cover;
+  transform: scale(1.01);
 }
 
 .resourceTopline {

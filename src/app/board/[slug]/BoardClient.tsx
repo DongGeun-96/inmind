@@ -1,5 +1,8 @@
 'use client';
 
+/* 외부 큐레이션 사진은 Next Image 도메인 설정 없이 안전하게 일반 img로 렌더링합니다. */
+/* eslint-disable @next/next/no-img-element */
+
 import { useState } from 'react';
 import Link from 'next/link';
 import { PenLine, UserPlus, ChevronDown, ExternalLink } from 'lucide-react';
@@ -77,11 +80,9 @@ function resourceImage(resource: CuratedResource) {
 function ResourceCard({ resource, featured = false }: { resource: CuratedResource; featured?: boolean }) {
   const content = (
     <>
-      <div
-        className={`${styles.resourceVisual} ${styles[`resourceVisual_${resource.type}`]}`}
-        aria-hidden="true"
-        style={{ backgroundImage: `linear-gradient(180deg, rgba(14, 10, 30, 0.04), rgba(14, 10, 30, 0.2)), url(${resourceImage(resource)})` }}
-      />
+      <div className={styles.resourceVisual} aria-hidden="true">
+        <img src={resourceImage(resource)} alt="" loading="lazy" />
+      </div>
       <div className={styles.resourceTopline}>
         <span className={`${styles.resourceBadge} ${styles[`resourceBadge_${resource.type}`]}`}>
           {resourceTypeLabel(resource.type)}
