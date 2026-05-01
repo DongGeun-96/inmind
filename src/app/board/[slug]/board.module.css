@@ -339,8 +339,8 @@
   display: flex;
   min-height: 100%;
   flex-direction: column;
-  gap: 10px;
-  padding: 18px;
+  gap: 11px;
+  padding: 12px;
   border: 1px solid var(--color-border-light);
   border-radius: 18px;
   background: var(--color-bg);
@@ -358,6 +358,46 @@
   transform: translateY(-2px);
   border-color: rgba(126, 87, 194, 0.32);
   box-shadow: 0 14px 34px rgba(35, 22, 55, 0.08);
+}
+
+.resourceVisual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 116px;
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.88), transparent 30%),
+    linear-gradient(135deg, #f4ecff 0%, #fff7ea 52%, #edf9f3 100%);
+  overflow: hidden;
+}
+
+.resourceVisual span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 10px 30px rgba(35, 22, 55, 0.09);
+  font-size: 32px;
+}
+
+.resourceVisual_official {
+  background: linear-gradient(135deg, #e4f7ef 0%, #f7fff9 100%);
+}
+
+.resourceVisual_news {
+  background: linear-gradient(135deg, #fff1cf 0%, #fffaf1 100%);
+}
+
+.resourceVisual_youtube {
+  background: linear-gradient(135deg, #ffe6ea 0%, #fff4f5 100%);
+}
+
+.resourceVisual_guide {
+  background: linear-gradient(135deg, #f2eafe 0%, #fffaf5 100%);
 }
 
 .resourceTopline {

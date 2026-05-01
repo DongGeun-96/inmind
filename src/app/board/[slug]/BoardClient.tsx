@@ -43,9 +43,36 @@ function resourceTypeLabel(type: CuratedResource['type']) {
   }
 }
 
+function resourceVisual(resource: CuratedResource) {
+  if (resource.visual) return resource.visual;
+  if (resource.tags.includes('수면')) return '🌙';
+  if (resource.tags.includes('카페인')) return '☕';
+  if (resource.tags.includes('장건강')) return '🥗';
+  if (resource.tags.includes('식습관') || resource.tags.includes('영양')) return '🍲';
+  if (resource.tags.includes('책추천') || resource.tags.includes('독서')) return '📚';
+  if (resource.tags.includes('영화') || resource.tags.includes('드라마')) return '🎬';
+  if (resource.tags.includes('산책') || resource.tags.includes('숲')) return '🌿';
+  if (resource.tags.includes('문구') || resource.tags.includes('낭독')) return '✍️';
+  if (resource.tags.includes('음악')) return '🎧';
+
+  switch (resource.type) {
+    case 'official':
+      return '🏛️';
+    case 'news':
+      return '📰';
+    case 'youtube':
+      return '▶️';
+    default:
+      return '💜';
+  }
+}
+
 function ResourceCard({ resource, featured = false }: { resource: CuratedResource; featured?: boolean }) {
   const content = (
     <>
+      <div className={`${styles.resourceVisual} ${styles[`resourceVisual_${resource.type}`]}`} aria-hidden="true">
+        <span>{resourceVisual(resource)}</span>
+      </div>
       <div className={styles.resourceTopline}>
         <span className={`${styles.resourceBadge} ${styles[`resourceBadge_${resource.type}`]}`}>
           {resourceTypeLabel(resource.type)}
