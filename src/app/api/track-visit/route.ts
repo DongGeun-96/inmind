@@ -18,7 +18,8 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const path = typeof body.path === 'string' ? body.path : '/';
+    const path = typeof body.path === 'string' ? body.path.slice(0, 500) : '/';
+    const clientReferrer = typeof body.referrer === 'string' ? body.referrer.slice(0, 1000) : null;
 
     const cookieStore = await cookies();
     let visitorToken = cookieStore.get('inmind_visitor')?.value;
@@ -49,7 +50,7 @@ export async function POST(request: NextRequest) {
     await supabase.from('page_visits').insert({
       visitor_token: visitorToken,
       path,
-      referrer: request.headers.get('referer') || null,
+      referrer: clientReferrer || request.headers.get('referer') || null,
       user_agent: ua || null,
     });
 

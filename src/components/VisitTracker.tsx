@@ -38,18 +38,23 @@ export default function VisitTracker() {
 
   useEffect(() => {
     if (!pathname || pathname === lastTracked.current) return;
-    if (!shouldTrack(pathname)) {
+    const pathWithQuery = `${pathname}${window.location.search || ''}`;
+
+    if (!shouldTrack(pathWithQuery)) {
       lastTracked.current = pathname;
       return;
     }
 
     lastTracked.current = pathname;
-    markTracked(pathname);
+    markTracked(pathWithQuery);
 
     fetch('/api/track-visit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ path: pathname }),
+      body: JSON.stringify({
+        path: pathWithQuery,
+        referrer: document.referrer || null,
+      }),
     }).catch(() => {
       // 추적 실패는 무시
     });
