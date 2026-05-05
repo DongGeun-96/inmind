@@ -1,5 +1,17 @@
+import type { Metadata } from 'next';
 import { createClient } from '@/lib/supabase-server';
 import HomeClient from './HomeClient';
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    url: SITE_URL,
+  },
+};
 
 export default async function HomePage() {
   const supabase = await createClient();

@@ -18,13 +18,19 @@ export async function generateMetadata({ params }: Props) {
   const hub = CURATED_HUBS[slug as BoardType];
   const title = hub?.title ?? config.label;
   const description = hub?.description ?? config.description;
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://in-mind.dev';
+  const canonicalUrl = `${siteUrl}/board/${slug}`;
 
   return {
     title,
     description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
     openGraph: {
       title,
       description,
+      url: canonicalUrl,
     },
   };
 }

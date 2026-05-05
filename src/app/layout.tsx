@@ -34,7 +34,6 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: `${SITE_NAME} - 힐링 커뮤니티`,
     description: SITE_DESCRIPTION,
-    url: SITE_URL,
   },
   twitter: {
     card: 'summary_large_image',
@@ -50,7 +49,6 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: SITE_URL,
     types: {
       'application/rss+xml': `${SITE_URL}/feed.xml`,
     },
