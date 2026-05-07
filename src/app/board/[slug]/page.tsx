@@ -3,6 +3,7 @@ import { BOARD_CONFIG, CATEGORIES, type BoardType } from '@/types/database';
 import { BOARD_META } from '@/data/board-meta';
 import { CURATED_HUBS, isCuratedHubBoard } from '@/data/curated-hubs';
 import { createClient } from '@/lib/supabase-server';
+import { getLiveCuratedResources } from '@/lib/external-curation';
 import BoardClient from './BoardClient';
 
 interface Props {
@@ -108,7 +109,14 @@ export default async function BoardPage({ params, searchParams }: Props) {
   };
 
   const meta = BOARD_META[boardType] ?? null;
-  const hub = CURATED_HUBS[boardType] ?? null;
+  const baseHub = CURATED_HUBS[boardType] ?? null;
+  const liveResources = baseHub && currentPage === 1 ? await getLiveCuratedResources(boardType) : [];
+  const hub = baseHub
+    ? {
+        ...baseHub,
+        resources: liveResources.length > 0 ? [...liveResources, ...baseHub.resources].slice(0, 8) : baseHub.resources,
+      }
+    : null;
   const showFaqLd = !isAllView && !hub && currentPage === 1 && meta && meta.faqs.length > 0;
   const faqLd = showFaqLd
     ? {

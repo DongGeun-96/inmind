@@ -189,9 +189,9 @@ export default function BoardClient({ boardType, config, meta, hub, notices, pos
 
             <section className={styles.hubSection} aria-labelledby="hub-resources-heading">
               <div className={styles.sectionHeader}>
-                <span className={styles.sectionEyebrow}>외부 자료</span>
-                <h2 id="hub-resources-heading" className={styles.sectionTitle}>뉴스·영상·공식 자료</h2>
-                <p className={styles.sectionDescription}>본문 복제 없이 출처와 탐색 링크 중심으로 연결합니다.</p>
+                <span className={styles.sectionEyebrow}>실시간 큐레이션</span>
+                <h2 id="hub-resources-heading" className={styles.sectionTitle}>추려온 뉴스·영상·공식 자료</h2>
+                <p className={styles.sectionDescription}>관련 자료를 서버에서 가져와 제목·출처·요약 중심으로 보여주고, 원문은 출처로 연결합니다.</p>
               </div>
               <div className={styles.resourceGrid}>
                 {hub.resources.map((resource) => (
