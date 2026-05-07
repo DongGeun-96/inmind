@@ -125,7 +125,7 @@ function qualityScore(resource: CuratedResource, rule: CurationRule): number {
 function filterQuality(resources: CuratedResource[], rule: CurationRule) {
   return resources
     .map((resource) => ({ resource, score: qualityScore(resource, rule) }))
-    .filter(({ score }) => score >= 3)
+    .filter(({ score }) => score >= 5)
     .sort((a, b) => b.score - a.score)
     .map(({ resource }) => resource);
 }
