@@ -79,9 +79,11 @@ function resourceImage(resource: CuratedResource) {
 function ResourceCard({ resource, featured = false }: { resource: CuratedResource; featured?: boolean }) {
   const content = (
     <>
-      <div className={styles.resourceVisual} aria-hidden="true">
-        <img src={resourceImage(resource)} alt="" loading="lazy" />
-      </div>
+      {!resource.hideImage && (
+        <div className={styles.resourceVisual} aria-hidden="true">
+          <img src={resourceImage(resource)} alt="" loading="lazy" />
+        </div>
+      )}
       <div className={styles.resourceTopline}>
         <span className={`${styles.resourceBadge} ${styles[`resourceBadge_${resource.type}`]}`}>
           {resourceTypeLabel(resource.type)}

@@ -12,6 +12,8 @@ export interface CuratedResource {
   /** 카드 상단에 쓰는 안전한 사진 썸네일입니다. */
   imageUrl?: string;
   imageAlt?: string;
+  /** 실제 썸네일이 없는 외부 수집 자료는 엉뚱한 대체 이미지를 숨깁니다. */
+  hideImage?: boolean;
 }
 
 export interface CuratedHub {

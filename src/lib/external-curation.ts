@@ -1,30 +1,56 @@
 import type { BoardType } from '@/types/database';
 import type { CuratedResource } from '@/data/curated-hubs';
 
-const QUERY_BY_BOARD: Partial<Record<BoardType, { news: string[]; youtube: string[] }>> = {
+type CurationRule = {
+  news: string[];
+  youtube: string[];
+  required: string[];
+  excluded: string[];
+  preferredSources: string[];
+};
+
+const CURATION_RULES: Partial<Record<BoardType, CurationRule>> = {
   healing_food: {
     news: ['수면 식습관 정신건강', '장 건강 정신건강', '카페인 불안 수면'],
     youtube: ['불안 카페인 줄이는 법 정신건강의학과', '수면에 좋은 식습관 영양사'],
+    required: ['수면', '식습관', '영양', '장 건강', '카페인', '정신건강', '스트레스', '불안'],
+    excluded: ['맛집', '광고', '주식', '분양', '정치', '연예'],
+    preferredSources: ['헬스조선', '하이닥', '코메디닷컴', '정책브리핑', '질병관리청', '서울대학교병원'],
   },
   healing_book: {
     news: ['독서 마음건강 치유', '심리 에세이 마음챙김 책'],
     youtube: ['마음이 힘들 때 읽는 책 추천', '독서치료 마음건강 책 추천'],
+    required: ['독서', '책', '에세이', '마음', '심리', '치유', '마음챙김'],
+    excluded: ['주식', '분양', '정치', '범죄', '사건'],
+    preferredSources: ['한겨레', '경향신문', '서울신문', '한국일보', '문화일보', '채널예스'],
   },
   healing_movie: {
-    news: ['힐링 영화 드라마 추천', '마음이 편해지는 영화 추천'],
+    news: ['힐링 영화 추천', '잔잔한 드라마 추천', '마음이 편해지는 영화'],
     youtube: ['힐링 영화 추천 리뷰', '잔잔한 드라마 추천 힐링'],
+    required: ['영화', '드라마', '힐링', '추천', '리뷰', '위로'],
+    excluded: ['박스오피스', '주식', '정치', '범죄'],
+    preferredSources: ['씨네21', '맥스무비', '한겨레', '경향신문', '한국일보'],
   },
   healing_place: {
-    news: ['산책 정신건강 스트레스', '숲길 산책 마음건강', '혼자 걷기 좋은 산책 코스'],
+    news: ['산림치유 숲길 산책', '서울 산책길 숲길 추천', '걷기 정신건강 스트레스'],
     youtube: ['혼자 걷기 좋은 산책 코스', '숲길 산책 힐링 여행지 추천'],
+    required: ['산책', '숲', '숲길', '공원', '걷기', '산림치유', '정신건강', '스트레스', '여행지', '둘레길'],
+    excluded: ['반려견', '축산', '예술 감상', '부동산', '분양', '주식', '정치', '사건', '사고', '범죄'],
+    preferredSources: ['서울특별시', '대한민국 정책브리핑', '정책브리핑', '한국관광공사', '연합뉴스', '헬스조선', '트래비', '여행신문'],
   },
   healing_quote: {
     news: ['위로 문장 에세이', '마음챙김 명언 에세이'],
     youtube: ['위로 문장 낭독', '마음이 편해지는 글귀 낭독'],
+    required: ['위로', '문장', '에세이', '낭독', '명언', '마음'],
+    excluded: ['정치', '주식', '분양', '사건', '범죄'],
+    preferredSources: ['한겨레', '경향신문', '한국일보', '채널예스', '서울신문'],
   },
   healing_etc: {
     news: ['취미 스트레스 완화', '음악 스트레스 완화 마음건강'],
     youtube: ['마음이 편해지는 음악 플레이리스트', '스트레스 완화 취미 추천'],
+    required: ['취미', '음악', '스트레스', '완화', '마음건강', '예술', '루틴'],
+    excluded: ['주식', '분양', '정치', '사건', '범죄'],
+    preferredSources: ['헬스조선', '하이닥', '코메디닷컴', '정책브리핑', '한겨레', '경향신문'],
   },
 };
 
@@ -57,6 +83,14 @@ function sourceBetween(block: string): string | null {
   return match ? decodeXml(match[1]) : null;
 }
 
+function hostname(url: string): string | null {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return null;
+  }
+}
+
 function compactSummary(summary: string, fallback: string): string {
   const cleaned = stripHtml(summary || fallback);
   if (!cleaned) return fallback;
@@ -73,6 +107,29 @@ function uniqueResources(resources: CuratedResource[]) {
   });
 }
 
+function qualityScore(resource: CuratedResource, rule: CurationRule): number {
+  const haystack = `${resource.title} ${resource.summary} ${resource.source}`.toLowerCase();
+  if (rule.excluded.some((word) => haystack.includes(word.toLowerCase()))) return -100;
+
+  let score = 0;
+  for (const word of rule.required) {
+    if (haystack.includes(word.toLowerCase())) score += 2;
+  }
+  for (const source of rule.preferredSources) {
+    if (resource.source.includes(source)) score += 3;
+  }
+  if (resource.title.length >= 12) score += 1;
+  return score;
+}
+
+function filterQuality(resources: CuratedResource[], rule: CurationRule) {
+  return resources
+    .map((resource) => ({ resource, score: qualityScore(resource, rule) }))
+    .filter(({ score }) => score >= 3)
+    .sort((a, b) => b.score - a.score)
+    .map(({ resource }) => resource);
+}
+
 async function fetchNaverNews(query: string, limit: number): Promise<CuratedResource[]> {
   const clientId = process.env.NAVER_CLIENT_ID || process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;
   const clientSecret = process.env.NAVER_CLIENT_SECRET;
@@ -81,7 +138,7 @@ async function fetchNaverNews(query: string, limit: number): Promise<CuratedReso
   const url = new URL('https://openapi.naver.com/v1/search/news.json');
   url.searchParams.set('query', query);
   url.searchParams.set('display', String(limit));
-  url.searchParams.set('sort', 'date');
+  url.searchParams.set('sort', 'sim');
 
   const response = await fetch(url, {
     headers: {
@@ -96,14 +153,18 @@ async function fetchNaverNews(query: string, limit: number): Promise<CuratedReso
     items?: Array<{ title?: string; originallink?: string; link?: string; description?: string }>;
   };
 
-  return (json.items || []).slice(0, limit).map((item) => ({
-    type: 'news' as const,
-    title: stripHtml(item.title || query),
-    source: '네이버 뉴스',
-    url: item.originallink || item.link || `https://search.naver.com/search.naver?where=news&query=${encodeURIComponent(query)}`,
-    summary: compactSummary(item.description || '', `${query} 관련 최신 기사입니다.`),
-    tags: ['뉴스', ...query.split(/\s+/).slice(0, 2)],
-  }));
+  return (json.items || []).slice(0, limit).map((item) => {
+    const url = item.originallink || item.link || `https://search.naver.com/search.naver?where=news&query=${encodeURIComponent(query)}`;
+    return {
+      type: 'news' as const,
+      title: stripHtml(item.title || query),
+      source: hostname(url) || '네이버 뉴스',
+      url,
+      summary: compactSummary(item.description || '', `${query} 관련 최신 기사입니다.`),
+      tags: ['뉴스', ...query.split(/\s+/).slice(0, 2)],
+      hideImage: true,
+    };
+  });
 }
 
 async function fetchGoogleNewsRss(query: string, limit: number): Promise<CuratedResource[]> {
@@ -134,6 +195,7 @@ async function fetchGoogleNewsRss(query: string, limit: number): Promise<Curated
       url: link,
       summary: compactSummary(description, `${query} 관련 최신 기사입니다.`),
       tags: ['뉴스', ...query.split(/\s+/).slice(0, 2)],
+      hideImage: true,
     };
   });
 }
@@ -193,13 +255,15 @@ async function fetchYoutube(query: string, limit: number): Promise<CuratedResour
 }
 
 export async function getLiveCuratedResources(boardType: BoardType): Promise<CuratedResource[]> {
-  const queries = QUERY_BY_BOARD[boardType];
-  if (!queries) return [];
+  const rule = CURATION_RULES[boardType];
+  if (!rule) return [];
 
   const [newsGroups, youtubeGroups] = await Promise.all([
-    Promise.all(queries.news.slice(0, 2).map((query) => fetchNews(query, 2).catch(() => []))),
-    Promise.all(queries.youtube.slice(0, 1).map((query) => fetchYoutube(query, 2).catch(() => []))),
+    Promise.all(rule.news.slice(0, 3).map((query) => fetchNews(query, 5).catch(() => []))),
+    Promise.all(rule.youtube.slice(0, 1).map((query) => fetchYoutube(query, 2).catch(() => []))),
   ]);
 
-  return uniqueResources([...newsGroups.flat(), ...youtubeGroups.flat()]).slice(0, 6);
+  const qualityNews = filterQuality(newsGroups.flat(), rule).slice(0, 4);
+  const videos = youtubeGroups.flat().slice(0, 2);
+  return uniqueResources([...qualityNews, ...videos]).slice(0, 6);
 }
