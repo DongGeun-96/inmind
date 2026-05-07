@@ -111,6 +111,10 @@ function ResourceCard({ resource, featured = false }: { resource: CuratedResourc
     );
   }
 
+  if (resource.type === 'guide') {
+    return <article className={featured ? styles.highlightCard : styles.resourceCard}>{content}</article>;
+  }
+
   return (
     <Link href={resource.url} className={featured ? styles.highlightCard : styles.resourceCard}>
       {content}
